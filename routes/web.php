@@ -18,6 +18,8 @@ use App\Http\Controllers\RequestbarangController;
 use App\Http\Controllers\AnalisisbarangController;
 use App\Http\Controllers\MastersupplymentController;
 use App\Http\Controllers\MasterdinaspenerimaController;
+use App\Models\Barangjarang;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -58,6 +60,9 @@ Route::prefix('dashboard')->middleware(['auth:sanctum'])->group(function() {
     Route::resource('analisisbarang', AnalisisbarangController::class);
     Route::resource('barangjarang', BarangjarangController::class);
 
+     // Data Tables Detail
+        Route::get('/pengiriman/{id}/detail', [PengirimanController::class, 'detail'])->name('pengiriman.detail');
+
 
     // Report
     // Pengiriman
@@ -86,21 +91,21 @@ Route::prefix('dashboard')->middleware(['auth:sanctum'])->group(function() {
     Route::get('laporankekuranganpdf/filter={filter}', [KekuranganController::class, 'laporankekuranganpdf'])->name('laporankekuranganpdf');
 
     // kebutuhan Barang
-    Route::get('laporannya/laporankekurangan', [AnalisisbarangController::class, 'cetakanalisiskebutuhanpertanggal'])->name('laporananalisiskebutuhan');
-    Route::get('laporananalisiskebutuhan', [AnalisisbarangController::class, 'filterdateanalisiskebutuhan'])->name('laporananalisiskebutuhan');
-    Route::get('laporananalisiskebutuhanpdf/filter={filter}', [AnalisisbarangController::class, 'laporananalisiskebutuhanpdf'])->name('laporananalisiskebutuhanpdf');
+    Route::get('laporannya/laporananalisisbarang', [AnalisisbarangController::class, 'cetakanalisisbarangpertanggal'])->name('laporananalisisbarang');
+    Route::get('laporananalisisbarang', [AnalisisbarangController::class, 'filterdateanalisisbarang'])->name('laporananalisisbarang');
+    Route::get('laporananalisisbarangpdf/filter={filter}', [AnalisisbarangController::class, 'laporananalisisbarangpdf'])->name('laporananalisisbarangpdf');
 
     // Barang Jarang
-    Route::get('laporannya/laporankekurangan', [AnalisisbarangController::class, 'cetakanalisiskebutuhanpertanggal'])->name('laporananalisiskebutuhan');
-    Route::get('laporananalisiskebutuhan', [AnalisisbarangController::class, 'filterdateanalisiskebutuhan'])->name('laporananalisiskebutuhan');
-    Route::get('laporananalisiskebutuhanpdf/filter={filter}', [AnalisisbarangController::class, 'laporananalisiskebutuhanpdf'])->name('laporananalisiskebutuhanpdf');
+    Route::get('laporannya/laporanbarangjarang', [BarangjarangController::class, 'cetakanbarangjarangpertanggal'])->name('laporanbarangjarang');
+    Route::get('laporanbarangjarang', [BarangjarangController::class, 'filterdateanbarangjarang'])->name('laporanbarangjarang');
+    Route::get('laporanbarangjarangpdf/filter={filter}', [BarangjarangController::class, 'laporanbarangjarangpdf'])->name('laporanbarangjarangpdf');
 
     // Status
     Route::put('/pengiriman/{id}/status', [PengirimanController::class, 'updateStatusPengiriman'])->name('updateStatusPengiriman');
     Route::put('/requestbarang/{id}/status', [RequestbarangController::class, 'updateStatusRequest'])->name('updateStatusRequest');
     Route::put('/analisisbarang/{id}/status', [AnalisisbarangController::class, 'updateStatusAnalisis'])->name('updateStatusAnalisis');
     Route::put('/barangjarang/{id}/status', [BarangjarangController::class, 'updateStatusBarangJarang'])->name('updateStatusBarangJarang');
-
+    Route::put('/pengembalian/{id}/status', [PengembalianController::class, 'updateStatuspengembalian'])->name('updateStatuspengembalian');
     // penerima Daerah
         Route::get('laporannya/penerima', [PengirimanController::class, 'penerima'])->name('penerima');
         Route::get('/penerimapdf', [PengirimanController::class, 'cetakpenerimaPdf'])->name('penerimapdf');
@@ -113,11 +118,3 @@ Route::prefix('dashboard')->middleware(['auth:sanctum'])->group(function() {
 Route::get('/login', [LoginController::class, 'login'])->name('login');
 Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
 Route::post('/loginuser', [LoginController::class, 'loginuser'])->name('loginuser');
-
-
-
-
-
-
-
-

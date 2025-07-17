@@ -17,7 +17,7 @@
     <div class="container-fluid">
         <div class="card" style="border-radius: 15px;">
           <div class="card-body">
-              <h1 class="text-center mb-4">Tambah Dinas Penerima</h1>
+              <h1 class="text-center mb-4">Tambah Bidang Penerima</h1>
               <div class="container">
                   <div class="row justify-content-center">
                       <div class="col-8">
@@ -33,7 +33,7 @@
                                               <div class="invalid-feedback">{{ $message }}</div>
                                           @enderror
                                       </div>
-                                      <div class="form-group">
+                                      {{-- <div class="form-group">
                                           <label for="alamat">Alamat</label>
                                           <input type="text" name="alamat" class="form-control @error('alamat') is-invalid @enderror" id="alamat"
                                               aria-describedby="emailHelp" placeholder="Masukan Alamat" value="{{ old('alamat') }}" required>
@@ -56,7 +56,7 @@
                                           @error('pimpinan')
                                               <div class="invalid-feedback">{{ $message }}</div>
                                           @enderror
-                                      </div>
+                                      </div> --}}
                                       <button type="submit" class="btn btn-primary">Submit</button>
                                   </form>
                               </div>

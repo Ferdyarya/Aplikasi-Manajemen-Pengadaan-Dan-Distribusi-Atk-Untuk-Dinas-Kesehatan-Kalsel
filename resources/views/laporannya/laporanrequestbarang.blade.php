@@ -17,12 +17,12 @@
                     <div class="content-header">
                         <div class="row mb-2">
                             <div class="col-sm-6">
-                                <h3 class="m-0">Data Laporan Request Alat Tulis Kedinasan</h3>
+                                <h3 class="m-0">Data Laporan Barang Masuk Alat Tulis Kedinasan</h3>
                             </div><!-- /.col -->
                             <div class="col-sm-6">
                                 <ol class="breadcrumb float-sm-right">
                                     <li class="breadcrumb-item"><a href="#">Dashboard</a></li>
-                                    <li class="breadcrumb-item active">Data Laporan Request Alat Tulis Kedinasan</li>
+                                    <li class="breadcrumb-item active">Data Laporan Barang Masuk Alat Tulis Kedinasan</li>
                                 </ol>
                             </div><!-- /.col -->
                         </div><!-- /.row -->

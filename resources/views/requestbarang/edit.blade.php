@@ -19,14 +19,14 @@
     <link rel="stylesheet"
         href="https://cdn.jsdelivr.net/npm/select2-bootstrap-5-theme@1.3.0/dist/select2-bootstrap-5-theme.rtl.min.css" />
 
-    <title>Data Request barang</title>
+    <title>Data Barang Masuk</title>
 
 
     <body>
         <div class="container-fluid">
             <div class="card">
                 <div class="card-body" style="border-radius: 15px;">
-                    <h1 class="text-center mb-4">Edit Data Request barang</h1>
+                    <h1 class="text-center mb-4">Edit Data Barang Masuk</h1>
                     <div class="container">
                         <div class="row justify-content-center">
                             <div class="col-8">
@@ -68,13 +68,13 @@
                                             <div class="form-group">
                                                 <label for="Kebutuhan">Kebutuhan</label>
                                                 <input value="{{ $item->Kebutuhan }}" type="text" name="Kebutuhan"
-                                                    class="form-control" required>
+                                                    class="form-control" required placeholder="Masukan Kebutuhan">
                                             </div>
 
                                             <div class="form-group">
                                                 <label for="qty">Qty</label>
                                                 <input type="number" name="qty" class="form-control"
-                                                    value="{{ $item->qty }}" required>
+                                                    value="{{ $item->qty }}" required placeholder="Masukan Qty">
                                             </div>
 
                                             <button type="submit" class="btn btn-primary">Submit</button>

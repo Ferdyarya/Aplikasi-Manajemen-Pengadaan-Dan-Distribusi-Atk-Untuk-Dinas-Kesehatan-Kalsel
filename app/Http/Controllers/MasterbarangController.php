@@ -27,13 +27,24 @@ class MasterbarangController extends Controller
 
 
     public function store(Request $request)
-    {
-        $data = $request->all();
+{
+    $data = $request->except('kodebarang');
 
-        Masterbarang::create($data);
+    // Cari kode terakhir
+    $lastItem = Masterbarang::orderBy('id', 'desc')->first();
 
-        return redirect()->route('masterbarang.index')->with('success', 'Data Telah ditambahkan');
+    if (!$lastItem || !$lastItem->kodebarang) {
+        $newCode = 'BRG0001';
+    } else {
+        $lastCodeNumber = (int) substr($lastItem->kodebarang, 3);
+        $newCode = 'BRG' . str_pad($lastCodeNumber + 1, 4, '0', STR_PAD_LEFT);
     }
+    $data['kodebarang'] = $newCode;
+
+    Masterbarang::create($data);
+
+    return redirect()->route('masterbarang.index')->with('success', 'Data Telah ditambahkan');
+}
 
 
     public function show($id)

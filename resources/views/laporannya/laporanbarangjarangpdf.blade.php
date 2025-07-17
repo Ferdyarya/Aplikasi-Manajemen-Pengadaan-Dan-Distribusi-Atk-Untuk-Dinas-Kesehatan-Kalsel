@@ -112,7 +112,7 @@
             $grandTotal = 0;
             @endphp --}}
 
-            @foreach ($laporananalisisbarang as $item)
+            @foreach ($laporanbarangjarang as $item)
                 <tr>
                     <td class="px-6 py-6">{{ $loop->iteration }}</td>
                     <td class="px-6 py-2">{{ \Carbon\Carbon::parse($item->tanggal)->format('d M Y') }}</td>

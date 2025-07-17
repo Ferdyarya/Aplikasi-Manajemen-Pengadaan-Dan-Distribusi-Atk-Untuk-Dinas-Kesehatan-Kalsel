@@ -19,14 +19,14 @@
     <link rel="stylesheet"
         href="https://cdn.jsdelivr.net/npm/select2-bootstrap-5-theme@1.3.0/dist/select2-bootstrap-5-theme.rtl.min.css" />
 
-    <title>Data Surat Pengiriman</title>
+    <title>Data Surat Pendistribusian</title>
 
 
     <body>
         <div class="container-fluid">
             <div class="card">
                 <div class="card-body" style="border-radius: 15px;">
-                    <h1 class="text-center mb-4">Edit Data Surat Pengiriman</h1>
+                    <h1 class="text-center mb-4">Edit Data Surat Pendistribusian</h1>
                     <div class="container">
                         <div class="row justify-content-center">
                             <div class="col-8">
@@ -68,7 +68,7 @@
                                             <div class="form-group">
                                                 <label for="qty">Qty</label>
                                                 <input type="number" name="qty" class="form-control"
-                                                    value="{{ $item->qty }}" required>
+                                                    value="{{ $item->qty }}" required placeholder="Masukan Qty">
                                             </div>
 
                                             <button type="submit" class="btn btn-primary">Submit</button>

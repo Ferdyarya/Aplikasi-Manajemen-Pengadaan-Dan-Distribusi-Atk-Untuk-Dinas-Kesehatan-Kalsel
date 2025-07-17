@@ -41,7 +41,7 @@ public function store(Request $request)
 {
     // Validasi
     $request->validate([
-        'bukti' => 'file|mimes:pdf',
+        'bukti' => 'nullable|file|mimes:jpg,jpeg,png,pdf|max:2048',
     ]);
 
     $data = Rusak::create($request->all());

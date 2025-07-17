@@ -115,7 +115,7 @@
                     <td class="px-6 py-2">{{ \Carbon\Carbon::parse($item->tanggal)->format('d M Y') }}</td>
                     <td class="px-6 py-2">{{ $item->masterbarang->nama }}</td>
                     <td class="px-6 py-2">{{ $item->qty }} PCS</td>
-                    <td class="px-6 py-2">{{ $item->masterdinaspenerima->nama }}</td>
+                    <td class="px-6 py-2">{{ $item->masterdinaspenerima->namadinas }}</td>
                     <td class="px-6 py-2">{{ $item->ketkerusakan}}</td>
                 </tr>
             @endforeach

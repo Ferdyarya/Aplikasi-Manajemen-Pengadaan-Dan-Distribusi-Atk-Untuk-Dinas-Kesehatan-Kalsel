@@ -32,11 +32,11 @@
                                         <input value="{{ $item->nama }}" type="text" name="nama" class="form-control"
                                             id="exampleInputPassword1" placeholder="Masukan Nama barang" required>
                                      </div>
-                                      <div class="form-group">
+                                      {{-- <div class="form-group">
                                         <label for="harga">Harga</label>
                                         <input value="{{ $item->harga }}" type="number" name="harga" class="form-control"
                                             id="exampleInputPassword1" placeholder="Masukan Harga" required>
-                                     </div>
+                                     </div> --}}
                                       <div class="form-group">
                                         <label for="qty">Qty</label>
                                         <input value="{{ $item->qty }}" type="number" name="qty" class="form-control"

@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('tanggal');
             $table->string('keterangan');
             $table->string('id_masterdinaspenerima');
-            $table->string('status');
+            $table->string('status')->nullable();
             $table->timestamps();
         });
     }

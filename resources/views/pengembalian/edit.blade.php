@@ -54,7 +54,7 @@
                                                     style="border-radius: 8px;" data-placeholder="Pilih Dinas Penerima">
                                                     <option></option>
                                                     @foreach ($masterdinaspenerima as $item)
-                                                        <option value="{{ $item->id }}">{{ $item->nama }}</option>
+                                                        <option value="{{ $item->id }}">{{ $item->namadinas }}</option>
                                                     @endforeach
                                                 </select>
                                             </div>
@@ -72,10 +72,20 @@
                                             </div>
 
                                             <div class="form-group">
-                                                <label for="keteranganbarang">Keterangan Barang</label>
+                                                <label for="keteranganbarang">Keterangan/Kondisi Barang</label>
                                                 <input value="{{ $item->keteranganbarang }}" type="text"
                                                     name="keteranganbarang" class="form-control" id="exampleInputPassword1"
                                                     placeholder="Masukan keteranganbarang" required>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label for="bukti">File Surat</label>
+                                                <input type="file" name="bukti" class="form-control">
+                                                @if ($item->bukti)
+                                                    <p>File saat ini: <a
+                                                            href="{{ url('bukti/' . $item->bukti) }}"
+                                                            target="_blank">{{ $item->bukti }}</a></p>
+                                                @endif
                                             </div>
 
                                             <button type="submit" class="btn btn-primary">Submit</button>

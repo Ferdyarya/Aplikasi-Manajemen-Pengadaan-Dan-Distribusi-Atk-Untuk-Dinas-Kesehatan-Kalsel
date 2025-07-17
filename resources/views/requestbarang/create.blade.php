@@ -19,14 +19,14 @@
     <link rel="stylesheet"
         href="https://cdn.jsdelivr.net/npm/select2-bootstrap-5-theme@1.3.0/dist/select2-bootstrap-5-theme.rtl.min.css" />
 
-    <title>Tambah Data Request Barang</title>
+    <title>Tambah Data Barang Masuk</title>
 
 
     <body>
         <div class="container-fluid">
             <div class="card" style="border-radius: 15px;">
                 <div class="card-body">
-                    <h1 class="text-center mb-4">Tambah Data Request Barang</h1>
+                    <h1 class="text-center mb-4">Tambah Data Barang Masuk</h1>
                     <div class="container">
                         <div class="row justify-content-center">
                             <div class="col-8">
@@ -72,7 +72,7 @@
                                                 <label for="kebutuhan">Kebutuhan</label>
                                                 <input type="text" name="kebutuhan"
                                                     class="form-control @error('kebutuhan') is-invalid @enderror"
-                                                    id="kebutuhan" value="{{ old('kebutuhan') }}" required>
+                                                    id="kebutuhan" value="{{ old('kebutuhan') }}" required placeholder="Masukan Kebutuhan">
                                                 @error('kebutuhan')
                                                     <div class="invalid-feedback">{{ $message }}</div>
                                                 @enderror

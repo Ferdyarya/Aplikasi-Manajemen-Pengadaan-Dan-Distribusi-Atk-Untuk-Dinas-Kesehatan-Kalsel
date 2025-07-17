@@ -13,8 +13,9 @@ return new class extends Migration
     {
         Schema::create('masterbarangs', function (Blueprint $table) {
             $table->id();
+            $table->string('kodebarang')->nullable();
             $table->string('nama');
-            $table->string('harga');
+            // $table->string('harga');
             $table->string('qty');
             $table->string('kategori');
             $table->timestamps();

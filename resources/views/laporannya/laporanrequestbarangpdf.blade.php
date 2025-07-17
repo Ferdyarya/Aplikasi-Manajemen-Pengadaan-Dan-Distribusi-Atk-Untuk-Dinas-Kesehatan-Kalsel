@@ -87,10 +87,8 @@
     </div>
 
     <center>
-        <h5 class="mt-4">Rekap Laporan Request Alat Tulis Kedinasan</h5>
+        <h5 class="mt-4">Rekap Laporan Barang Masuk Alat Tulis Kedinasan</h5>
     </center>
-
-
 
     <br>
 

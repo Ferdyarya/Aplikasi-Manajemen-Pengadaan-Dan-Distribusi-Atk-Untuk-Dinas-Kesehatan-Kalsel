@@ -53,7 +53,7 @@
                                                     style="border-radius: 8px;" data-placeholder="Pilih Dinas Penerima">
                                                     <option></option>
                                                     @foreach ($masterdinaspenerima as $item)
-                                                        <option value="{{ $item->id }}">{{ $item->nama }}</option>
+                                                        <option value="{{ $item->id }}">{{ $item->namadinas }}</option>
                                                     @endforeach
                                                 </select>
                                             </div>

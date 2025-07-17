@@ -39,13 +39,21 @@ class RequestbarangController extends Controller
 
 public function store(Request $request)
 {
-
     $data = $request->all();
-    // dd($data);
-    Requestbarang::create($data);
+
+    $requestBarang = Requestbarang::create($data);
+
+    $barang = Masterbarang::find($data['id_masterbarang']);
+
+    if ($barang) {
+        // Tambah qty ke master data barang
+        $barang->qty += $data['qty'];
+        $barang->save();
+    }
 
     return redirect()->route('requestbarang.index')->with('success', 'Data telah ditambahkan');
 }
+
 
 
 
@@ -58,7 +66,7 @@ public function store(Request $request)
     public function edit(requestbarang $requestbarang)
     {
         $masterbarang = Masterbarang::all();
-        $mastersupplyment = Masterdinaspenerima::all();
+        $mastersupplyment = Mastersupplyment::all();
 
         return view('requestbarang.edit', [
             'item' => $requestbarang,

@@ -19,14 +19,14 @@
     <link rel="stylesheet"
         href="https://cdn.jsdelivr.net/npm/select2-bootstrap-5-theme@1.3.0/dist/select2-bootstrap-5-theme.rtl.min.css" />
 
-    <title>Tambah Data Pengiriman</title>
+    <title>Tambah Data Pendistribusian</title>
 
 
     <body>
         <div class="container-fluid">
             <div class="card" style="border-radius: 15px;">
                 <div class="card-body">
-                    <h1 class="text-center mb-4">Tambah Data Pengiriman</h1>
+                    <h1 class="text-center mb-4">Tambah Data Pendistribusian</h1>
                     <div class="container">
                         <div class="row justify-content-center">
                             <div class="col-8">
@@ -36,16 +36,6 @@
                                             enctype="multipart/form-data">
                                             @csrf
 
-                                            <div class="form-group mb-3">
-                                                <label for="id_masterbarang">Nama Barang</label>
-                                                <select class="form-select" name="id_masterbarang" id="barang"
-                                                    style="border-radius: 8px;" data-placeholder="Pilih Barang">
-                                                    <option></option>
-                                                    @foreach ($masterbarang as $item)
-                                                        <option value="{{ $item->id }}">{{ $item->nama }}</option>
-                                                    @endforeach
-                                                </select>
-                                            </div>
 
                                             <div class="form-group mb-3">
                                                 <label for="id_masterdinaspenerima">Dinas Penerima</label>
@@ -68,15 +58,31 @@
                                                 @enderror
                                             </div>
 
-                                            <div class="form-group">
-                                                <label for="qty">Qty</label>
-                                                <input type="number" name="qty"
-                                                    class="form-control @error('qty') is-invalid @enderror"
-                                                    id="qty" value="{{ old('qty') }}" required placeholder="Masukan Qty">
-                                                @error('qty')
-                                                    <div class="invalid-feedback">{{ $message }}</div>
-                                                @enderror
+                                            <h5 class="mt-4">Distribusi Barang</h5>
+                                            <div id="distribarang-wrapper">
+                                                <div class="form-row mb-2 align-items-center">
+                                                    <div class="col">
+                                                        <select name="distribarang[0][id_masterbarang]"
+                                                            class="form-select select-barang" required>
+                                                            <option value="">Pilih Barang</option>
+                                                            @foreach ($masterbarang as $barang)
+                                                                <option value="{{ $barang->id }}">{{ $barang->nama }}
+                                                                </option>
+                                                            @endforeach
+                                                        </select>
+                                                    </div>
+                                                    <div class="col">
+                                                        <input type="number" name="distribarang[0][qty]" class="form-control"
+                                                            placeholder="Jumlah Qty">
+                                                    </div>
+                                                    <div class="col-auto">
+                                                        <button type="button"
+                                                            class="btn btn-danger btn-sm remove-row">❌</button>
+                                                    </div>
+                                                </div>
                                             </div>
+                                            <button type="button" class="btn btn-sm btn-success mb-3"
+                                                onclick="tambahDistribarang()">+ Tambah barang</button>
 
 
                                             <button type="submit" class="btn btn-primary">Submit</button>
@@ -134,7 +140,7 @@
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
     <script>
-        $('#barang').select2({
+        $('#select-barang').select2({
             theme: "bootstrap-5",
             width: $(this).data('width') ? $(this).data('width') : $(this).hasClass('w-100') ? '100%' : 'style',
             placeholder: $(this).data('placeholder'),
@@ -143,6 +149,59 @@
             theme: "bootstrap-5",
             width: $(this).data('width') ? $(this).data('width') : $(this).hasClass('w-100') ? '100%' : 'style',
             placeholder: $(this).data('placeholder'),
+        });
+    </script>
+
+    <script>
+        let i = 1;
+
+        function tambahDistribarang() {
+            let options = `<option value="">Pilih Barang</option>`;
+            distribarangList.forEach(p => {
+                options += `<option value="${p.id}">${p.nama}</option>`;
+            });
+
+            $('#distribarang-wrapper').append(`
+        <div class="form-row mb-2 align-items-center">
+            <div class="col">
+                <select name="distribarang[${i}][id_masterbarang]"
+                    class="form-select select-barang" required>
+                    ${options}
+                </select>
+            </div>
+            <div class="col">
+                <input type="number" name="distribarang[${i}][qty]" class="form-control"
+                    placeholder="Jumlah Qty">
+            </div>
+            <div class="col-auto">
+                <button type="button"
+                    class="btn btn-danger btn-sm remove-row">❌</button>
+            </div>
+        </div>
+    `);
+
+            // Apply select2 ke elemen baru
+            $('.select-barang').select2({
+                theme: 'bootstrap-5'
+            });
+
+            i++;
+        }
+
+
+        // Hapus baris
+        $(document).on('click', '.remove-row', function() {
+            $(this).closest('.form-row').remove();
+        });
+    </script>
+
+    <script>
+        const distribarangList = @json($masterbarang);
+
+        $(document).ready(function() {
+            $('.select-barang').select2({
+                theme: 'bootstrap-5'
+            });
         });
     </script>
 @endsection

@@ -36,6 +36,11 @@
                                             enctype="multipart/form-data">
                                             @csrf
 
+                                            <div class="form-group">
+                                                <label for="exampleInputPassword1">Masukan File Bukti</label>
+                                                <input type="file" name="bukti" class="form-control"
+                                                    placeholder="Masukan File Bukti">
+                                            </div>
                                             <div class="form-group mb-3">
                                                 <label for="id_masterbarang">Nama Barang</label>
                                                 <select class="form-select" name="id_masterbarang" id="barang"
@@ -53,7 +58,7 @@
                                                     style="border-radius: 8px;" data-placeholder="Pilih Dinas Penerima">
                                                     <option></option>
                                                     @foreach ($masterdinaspenerima as $item)
-                                                        <option value="{{ $item->id }}">{{ $item->nama }}</option>
+                                                        <option value="{{ $item->id }}">{{ $item->namadinas }}</option>
                                                     @endforeach
                                                 </select>
                                             </div>
@@ -71,9 +76,20 @@
                                             <div class="form-group">
                                                 <label for="qty">Qty</label>
                                                 <input type="number" name="qty"
-                                                    class="form-control @error('qty') is-invalid @enderror"
-                                                    id="qty" value="{{ old('qty') }}" required placeholder="Masukan Qty">
+                                                    class="form-control @error('qty') is-invalid @enderror" id="qty"
+                                                    value="{{ old('qty') }}" required placeholder="Masukan Qty">
                                                 @error('qty')
+                                                    <div class="invalid-feedback">{{ $message }}</div>
+                                                @enderror
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label for="keteranganbarang">Keterangan/Kondisi Barang</label>
+                                                <input type="number" name="keteranganbarang"
+                                                    class="form-control @error('keteranganbarang') is-invalid @enderror"
+                                                    id="keteranganbarang" value="{{ old('keteranganbarang') }}" required
+                                                    placeholder="Masukan keteranganbarang">
+                                                @error('keteranganbarang')
                                                     <div class="invalid-feedback">{{ $message }}</div>
                                                 @enderror
                                             </div>

@@ -86,7 +86,7 @@
     </div>
 
     <center>
-        <h5 class="mt-4">Rekap Laporan Pengiriman Alat Tulis Kedinasan</h5>
+        <h5 class="mt-4">Rekap Laporan Kekurangan Alat Tulis Kedinasan</h5>
     </center>
 
 
@@ -108,7 +108,7 @@
             $grandTotal = 0;
             @endphp --}}
 
-            @foreach ($laporanrusak as $item)
+            @foreach ($laporankekurangan as $item)
                 <tr>
                     <td class="px-6 py-6">{{ $loop->iteration }}</td>
                     <td class="px-6 py-2">{{ \Carbon\Carbon::parse($item->tanggal)->format('d M Y') }}</td>

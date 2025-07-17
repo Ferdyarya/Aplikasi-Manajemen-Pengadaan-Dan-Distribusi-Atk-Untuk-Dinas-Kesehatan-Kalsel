@@ -15,12 +15,12 @@
                     <div class="content-header">
                         <div class="row mb-2">
                             <div class="col-sm-6">
-                                <h1 class="m-0">Data Pengiriman</h1>
+                                <h1 class="m-0">Data Pendistribusian</h1>
                             </div>
                             <div class="col-sm-6">
                                 <ol class="breadcrumb float-sm-right">
                                     <li class="breadcrumb-item"><a href="#">Dashboard</a></li>
-                                    <li class="breadcrumb-item active">Data Pengiriman</li>
+                                    <li class="breadcrumb-item active">Data Pendistribusian</li>
                                 </ol>
                             </div>
                         </div>
@@ -35,24 +35,28 @@
                                         placeholder="Search">
                                 </form>
                             </div>
-                            {{-- Button Export PDF --}}
-                            <div class="col-auto">
-                                <a href="{{ route('pengiriman.create') }}" class="btn btn-primary">
-                                    Tambah Data
-                                </a>
-                            </div>
+                            @if (Auth::user()->hakakses('petugas') || Auth::user()->hakakses('admin'))
+                                <div class="col-auto">
+                                    <a href="{{ route('pengiriman.create') }}" class="btn btn-primary">
+                                        Tambah Data
+                                    </a>
+                                </div>
+                            @endif
                         </div>
                         <div>
                             <table class="table table-hover">
                                 <thead>
                                     <tr>
                                         <th class="px-6 py-2">No</th>
+                                        <th class="px-6 py-2">No Kirim</th>
                                         <th class="px-6 py-2">Tanggal</th>
-                                        <th class="px-6 py-2">Nama Barang</th>
-                                        <th class="px-6 py-2">Qty</th>
+                                        {{-- <th class="px-6 py-2">Nama Barang</th> --}}
+                                        {{-- <th class="px-6 py-2">Qty</th> --}}
                                         <th class="px-6 py-2">Dinas Pengirim</th>
                                         <th class="px-6 py-2">Status</th>
-                                        <th class="px-6 py-2">Action</th>
+                                         @if (Auth::user()->hakakses('petugas') || Auth::user()->hakakses('admin'))
+<th class="px-6 py-2">Action</th>
+@endif
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -62,10 +66,11 @@
                                     @foreach ($pengiriman as $index => $item)
                                         <tr>
                                             <th class="px-6 py-2">{{ $index + $pengiriman->firstItem() }}</th>
+                                            <td class="px-6 py-2">{{ $item->nokirim }}</td>
                                             <td class="px-6 py-2">
                                                 {{ \Carbon\Carbon::parse($item->tanggal)->format('d M Y') }}</td>
-                                            <td class="px-6 py-2">{{ $item->masterbarang->nama }}</td>
-                                            <td class="px-6 py-2">{{ $item->qty }} PCS</td>
+                                            {{-- <td class="px-6 py-2">{{ $item->masterbarang->nama }}</td> --}}
+                                            {{-- <td class="px-6 py-2">{{ $item->qty }} PCS</td> --}}
                                             <td class="px-6 py-2">{{ $item->masterdinaspenerima->namadinas }}</td>
                                             <td class="px-6 py-2">
                                                 @if ($item->status == 'Terkirim')
@@ -104,20 +109,24 @@
                                                     @endif
                                                 @endif
                                             </td>
-
-
-
-
-                                            <td class="px-6 py-2">
-                                                <a href="{{ route('pengiriman.edit', $item->id) }}"
-                                                    class="btn btn-primary">Edit</a>
-                                                <form action="{{ route('pengiriman.destroy', $item->id) }}" method="POST"
-                                                    style="display:inline;">
-                                                    @csrf
-                                                    @method('delete')
-                                                    <button type="submit" class="btn btn-danger">Hapus</button>
-                                                </form>
-                                            </td>
+                                            @if (Auth::user()->hakakses('petugas') || Auth::user()->hakakses('admin'))
+                                                <td class="px-6 py-2">
+                                                    <a href="{{ route('pengiriman.edit', $item->id) }}"
+                                                        class="btn btn-primary">Edit</a>
+                                                    <form action="{{ route('pengiriman.destroy', $item->id) }}"
+                                                        method="POST" style="display:inline;">
+                                                        @csrf
+                                                        @method('delete')
+                                                        <button type="submit" class="btn btn-danger">Hapus</button>
+                                                    </form>
+                                                    @if (Auth::user()->hakakses('petugas')|| Auth::user()->hakakses('admin')|| Auth::user()->hakakses('pimpinan'))
+                                                    <a href="{{ route('pengiriman.detail', $item->id) }}"
+                                                        class="mt-1 btn btn-primary">
+                                                        Detail
+                                                    </a>
+                                                    @endif
+                                                </td>
+                                            @endif
                                         </tr>
                                     @endforeach
                                 </tbody>

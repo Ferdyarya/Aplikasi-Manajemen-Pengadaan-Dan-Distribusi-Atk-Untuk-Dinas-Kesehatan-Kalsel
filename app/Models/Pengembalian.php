@@ -9,7 +9,7 @@ class Pengembalian extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'id_masterbarang','qty','id_masterdinaspenerima','tanggal','keteranganbarang'
+        'id_masterbarang','qty','id_masterdinaspenerima','tanggal','keteranganbarang','bukti','status'
     ];
 
     public function masterdinaspenerima()

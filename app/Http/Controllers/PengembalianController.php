@@ -39,13 +39,47 @@ class PengembalianController extends Controller
 
 public function store(Request $request)
 {
+    // Validasi input
+    $validated = $request->validate([
+        'id_masterbarang' => 'required|exists:masterbarangs,id',
+        'qty' => 'required|integer',
+        'id_masterdinaspenerima' => 'required|exists:masterdinaspenerimas,id',
+        'tanggal' => 'required|date',
+        'keteranganbarang' => 'nullable|string',
+        'status' => 'required|string',
+        'bukti' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048'
+    ]);
 
-    $data = $request->all();
-    // dd($data);
-    Pengembalian::create($data);
+    // Proses upload file
+    if ($request->hasFile('bukti')) {
+        $file = $request->file('bukti');
+        $filename = time() . '_' . $file->getClientOriginalName();
+        $path = $file->storeAs('public/bukti_pengembalian', $filename);
+        $validated['bukti'] = $filename;
+    }
+
+    // Simpan ke database
+    Pengembalian::create($validated);
 
     return redirect()->route('pengembalian.index')->with('success', 'Data telah ditambahkan');
 }
+
+public function updateStatuspengembalian(Request $request, $id)
+    {
+        $validated = $request->validate([
+            'status' => 'required|in:Terverifikasi,Ditolak',
+        ]);
+
+        // Find the rawatrumahkaca entry by ID
+        $pengembalian = Pengembalian::findOrFail($id);
+
+        // Update the status based on the form input
+        $pengembalian->status = $validated['status'];
+        $pengembalian->save();
+
+        // Redirect back to the suratmasuk page with a success message
+        return redirect()->route('pengembalian.index')->with('success', 'Status Berhasil Diperbarui.');
+    }
 
 
 

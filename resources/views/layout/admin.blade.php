@@ -34,7 +34,7 @@
                 <br>
               <div class="brand-logo d-flex align-items-center justify-content-between">
                 <a href="./index.html" class="text-nowrap logo-img">
-                  <img src="{{ asset('assets/logokesehatan.png')}}" width="180" alt="" />
+                  <img src="{{ asset('assets/logokesehatan.png')}}" width="80" alt="" />
                 </a>
                 <div class="close-btn d-xl-none d-block sidebartoggler cursor-pointer" id="sidebarCollapse">
                   <i class="ti ti-x fs-8"></i>
@@ -73,7 +73,7 @@
                       <span>
                         <i class="ti ti-article"></i>
                       </span>
-                      <span class="hide-menu">Master Dinas</span>
+                      <span class="hide-menu">Master Bidang Penerima</span>
                     </a>
                   </li>
                   <li class="sidebar-item">
@@ -84,22 +84,6 @@
                       <span class="hide-menu">Master Supplyment</span>
                     </a>
                   </li>
-                  {{-- <li class="sidebar-item">
-                    <a class="sidebar-link" href="{{ route('masterderetkursi.index')}}" aria-expanded="false">
-                      <span>
-                        <i class="ti ti-article"></i>
-                      </span>
-                      <span class="hide-menu">Kategori Deret</span>
-                    </a>
-                  </li>
-                  <li class="sidebar-item">
-                    <a class="sidebar-link" href="{{ route('masternokursi.index')}}" aria-expanded="false">
-                      <span>
-                        <i class="ti ti-article"></i>
-                      </span>
-                      <span class="hide-menu">Kategori No Kursi</span>
-                    </a>
-                  </li> --}}
                   @endif
                   @if (Auth::user()->hakakses('pimpinan') || Auth::user()->hakakses('admin'))
                   <li class="nav-small-cap">
@@ -112,7 +96,7 @@
                         <span>
                             <i class="ti ti-menu"></i>
                         </span>
-                        <span class="hide-menu">Pengiriman Barang</span>
+                        <span class="hide-menu">Pendistribusian Barang</span>
                     </a>
                 </li>
                 <li class="sidebar-item">
@@ -128,7 +112,7 @@
                         <span>
                             <i class="ti ti-menu"></i>
                         </span>
-                        <span class="hide-menu">Request Barang</span>
+                        <span class="hide-menu">Barang Masuk</span>
                     </a>
                 </li>
                 <li class="sidebar-item">
@@ -147,6 +131,8 @@
                         <span class="hide-menu">Kekurangan Barang</span>
                     </a>
                 </li>
+                @endif
+                @if (Auth::user()->hakakses('admin')|| Auth::user()->hakakses('petugas')|| Auth::user()->hakakses('pimpinan'))
                 <li class="sidebar-item">
                     <a class="sidebar-link" href="{{ route('analisisbarang.index') }}" aria-expanded="false">
                         <span>
@@ -164,22 +150,6 @@
                     </a>
                 </li>
                 @endif
-                {{-- <li class="sidebar-item">
-                    <a class="sidebar-link" href="{{ route('suratdisposisi.index') }}" aria-expanded="false">
-                        <span>
-                            <i class="ti ti-mail"></i>
-                        </span>
-                        <span class="hide-menu">Surat masuk</span>
-                    </a>
-                </li>
-                <li class="sidebar-item">
-                    <a class="sidebar-link" href="{{ route('suratdisposisi.index') }}" aria-expanded="false">
-                        <span>
-                            <i class="ti ti-mail"></i>
-                        </span>
-                        <span class="hide-menu">Surat Keluar</span>
-                    </a>
-                </li> --}}
                 @if (Auth::user()->hakakses('admin')|| Auth::user()->hakakses('petugas'))
                   <li class="nav-small-cap">
                     <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
@@ -222,7 +192,7 @@
                       <span>
                         <i class="ti ti-report"></i>
                       </span>
-                      <span class="hide-menu">Lap Request Barang</span>
+                      <span class="hide-menu">Lap Barang Masuk</span>
                     </a>
                   </li>
                   <li class="sidebar-item">

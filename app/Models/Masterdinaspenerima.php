@@ -9,6 +9,6 @@ class Masterdinaspenerima extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'namadinas','alamat','daerah','pimpinan'
+        'namadinas'
     ];
 }

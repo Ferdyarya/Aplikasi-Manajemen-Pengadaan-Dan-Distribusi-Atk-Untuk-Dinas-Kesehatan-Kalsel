@@ -29,7 +29,7 @@
                                     <h3>{{ $requestbarangCount }}</h3>
                                 </div>
                                 <div class="col-6 col-md-3">
-                                    <h4 class="text-black"><b>Jumlah Barang</b></h4>
+                                    <h4 class="text-black"><b>Jumlah Stock Barang</b></h4>
                                     <h3>{{ $masterbarangCount }}</h3>
                                 </div>
                             </div>

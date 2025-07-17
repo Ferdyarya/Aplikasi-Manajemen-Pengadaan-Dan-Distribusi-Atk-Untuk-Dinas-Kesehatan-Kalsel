@@ -17,12 +17,12 @@
                     <div class="content-header">
                         <div class="row mb-2">
                             <div class="col-sm-6">
-                                <h3 class="m-0">Data Laporan Pengiriman Alat Tulis Kedinasan</h3>
+                                <h3 class="m-0">Data Laporan Pendistribusian Alat Tulis Kedinasan</h3>
                             </div><!-- /.col -->
                             <div class="col-sm-6">
                                 <ol class="breadcrumb float-sm-right">
                                     <li class="breadcrumb-item"><a href="#">Dashboard</a></li>
-                                    <li class="breadcrumb-item active">Data Laporan Pengiriman Alat Tulis Kedinasan</li>
+                                    <li class="breadcrumb-item active">Data Laporan Pendistribusian Alat Tulis Kedinasan</li>
                                 </ol>
                             </div><!-- /.col -->
                         </div><!-- /.row -->
@@ -86,7 +86,7 @@
                                         <td class="px-6 py-2">{{ \Carbon\Carbon::parse($item->tanggal)->format('d M Y') }}</td>
                                         <td class="px-6 py-2">{{ $item->masterbarang->nama }}</td>
                                         <td class="px-6 py-2">{{ $item->qty }} PCS</td>
-                                        <td class="px-6 py-2">{{ $item->masterdinaspenerima->nama }}</td>
+                                        <td class="px-6 py-2">{{ $item->masterdinaspenerima->namadinas }}</td>
                                         <td class="px-6 py-2">
                                             @if($item->status == 'Terverifikasi')
                                                 <span class="p-2 mb-2 bg-success text-black rounded">Terverifikasi</span> <!-- Green for verified -->

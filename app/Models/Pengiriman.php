@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Distribarang;
 use App\Models\Masterbarang;
 use App\Models\Masterdinaspenerima;
 use Illuminate\Database\Eloquent\Model;
@@ -10,16 +11,15 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 class Pengiriman extends Model
 {
     use HasFactory;
-    protected $fillable = [
-        'id_masterbarang','qty','id_masterdinaspenerima','tanggal','status'
-    ];
+    protected $fillable = ['nokirim', 'id_masterdinaspenerima', 'tanggal', 'status', 'id_distribarang'];
 
     public function masterdinaspenerima()
     {
         return $this->hasOne(Masterdinaspenerima::class, 'id', 'id_masterdinaspenerima');
     }
-    public function masterbarang()
+
+    public function distribarang()
     {
-        return $this->hasOne(Masterbarang::class, 'id', 'id_masterbarang');
+        return $this->hasMany(Distribarang::class, 'id_pengiriman', 'id');
     }
 }

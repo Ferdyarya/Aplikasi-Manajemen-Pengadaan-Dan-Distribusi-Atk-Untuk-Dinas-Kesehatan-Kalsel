@@ -35,12 +35,13 @@
                             <input type="text" id="search" name="search" class="form-control" placeholder="Search">
                         </form>
                     </div>
-                    {{-- Button Export PDF --}}
+                    @if (Auth::user()->hakakses('petugas')|| Auth::user()->hakakses('admin'))
                     <div class="col-auto">
                         <a href="{{ route('analisisbarang.create')}}" class="btn btn-primary">
                             Tambah Data
                         </a>
                     </div>
+                    @endif
                 </div>
                 <div>
                     <table class="table table-hover">
@@ -53,7 +54,9 @@
                                 <th class="px-6 py-2">Permintaan Ke</th>
                                 <th class="px-6 py-2">Keterangan</th>
                                 <th class="px-6 py-2">Status</th>
-                                <th class="px-6 py-2">Action</th>
+                                 @if (Auth::user()->hakakses('petugas') || Auth::user()->hakakses('admin'))
+<th class="px-6 py-2">Action</th>
+@endif
                             </tr>
                         </thead>
                         <tbody>
@@ -66,7 +69,7 @@
                                 <td class="px-6 py-2">{{ \Carbon\Carbon::parse($item->tanggal)->format('d M Y') }}</td>
                                 <td class="px-6 py-2">{{ $item->masterbarang->nama }}</td>
                                 <td class="px-6 py-2">{{ $item->qty }} PCS</td>
-                                <td class="px-6 py-2">{{ $item->masterdinaspenerima->nama }}</td>
+                                <td class="px-6 py-2">{{ $item->masterdinaspenerima->namadinas }}</td>
                                 <td class="px-6 py-2">{{ $item->keterangan }}</td>
                                 <td class="px-6 py-2">
                                     @if($item->status == 'Terverifikasi')
@@ -95,9 +98,7 @@
                                         @endif
                                     @endif
                                 </td>
-
-
-
+                                @if (Auth::user()->hakakses('petugas')|| Auth::user()->hakakses('admin'))
                                 <td class="px-6 py-2">
                                     <a href="{{ route('analisisbarang.edit', $item->id) }}" class="btn btn-primary">Edit</a>
                                     <form action="{{ route('analisisbarang.destroy', $item->id) }}" method="POST" style="display:inline;">
@@ -106,6 +107,7 @@
                                         <button type="submit" class="btn btn-danger">Hapus</button>
                                     </form>
                                 </td>
+                                @endif
                             </tr>
                             @endforeach
                         </tbody>

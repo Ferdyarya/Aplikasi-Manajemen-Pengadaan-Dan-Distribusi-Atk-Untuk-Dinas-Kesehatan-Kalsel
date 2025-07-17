@@ -11,14 +11,14 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
     integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous" />
 
-<title>Master Data Supplyment</title>
+<title>Master Data Bidang Penerima</title>
 
 
 <body>
     <div class="container-fluid">
         <div class="card" style="border-radius: 15px;">
           <div class="card-body">
-              <h1 class="text-center mb-4">Edit Data Supplyment</h1>
+              <h1 class="text-center mb-4">Edit Data Bidang Penerima</h1>
               <div class="container">
                   <div class="row justify-content-center">
                       <div class="col-8">
@@ -32,7 +32,7 @@
                                         <input value="{{ $item->nama }}" type="text" name="nama" class="form-control"
                                             id="exampleInputPassword1" placeholder="Masukan Nama" required>
                                      </div>
-                                      <div class="form-group">
+                                      {{-- <div class="form-group">
                                         <label for="alamat">Alamat</label>
                                         <input value="{{ $item->alamat }}" type="text" name="alamat" class="form-control"
                                             id="exampleInputPassword1" placeholder="Masukan Alamat" required>
@@ -46,7 +46,7 @@
                                         <label for="pimpinan">Pimpinan</label>
                                         <input value="{{ $item->pimpinan }}" type="text" name="pimpinan" class="form-control"
                                             id="exampleInputPassword1" placeholder="Masukan pimpinan" required>
-                                     </div>
+                                     </div> --}}
                                       <button type="submit" class="btn btn-primary">Submit</button>
                                   </form>
                               </div>

@@ -46,7 +46,7 @@
                           </form>
                       </div>
 
-                      {{-- Button Export PDF --}}
+                      @if (Auth::user()->hakakses('petugas')|| Auth::user()->hakakses('admin'))
                       <div class="col-auto">
                           <a href="{{ route('masterpegawai.create')}}" class="btn btn-primary">
                               Tambah Data
@@ -55,6 +55,7 @@
                               Export PDF
                           </a> --}}
                       </div>
+                      @endif
                   </div>
 
                   <div>
@@ -68,7 +69,9 @@
                                 <th class="px-6 py-2">Jabatan</th>
                                 <th class="px-6 py-2">Jenis Kelamin</th>
                                 <th class="px-6 py-2">Cabang</th>
-                                <th class="px-6 py-2">Action</th>
+                                 @if (Auth::user()->hakakses('petugas') || Auth::user()->hakakses('admin'))
+<th class="px-6 py-2">Action</th>
+@endif
                             </tr>
                         </thead>
                         <tbody>
