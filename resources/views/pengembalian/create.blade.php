@@ -38,7 +38,7 @@
 
                                             <div class="form-group">
                                                 <label for="exampleInputPassword1">Masukan File Bukti</label>
-                                                <input type="file" name="bukti" class="form-control"
+                                                <input type="file" name="buktikembali" class="form-control"
                                                     placeholder="Masukan File Bukti">
                                             </div>
                                             <div class="form-group mb-3">
@@ -85,7 +85,7 @@
 
                                             <div class="form-group">
                                                 <label for="keteranganbarang">Keterangan/Kondisi Barang</label>
-                                                <input type="number" name="keteranganbarang"
+                                                <input type="text" name="keteranganbarang"
                                                     class="form-control @error('keteranganbarang') is-invalid @enderror"
                                                     id="keteranganbarang" value="{{ old('keteranganbarang') }}" required
                                                     placeholder="Masukan keteranganbarang">

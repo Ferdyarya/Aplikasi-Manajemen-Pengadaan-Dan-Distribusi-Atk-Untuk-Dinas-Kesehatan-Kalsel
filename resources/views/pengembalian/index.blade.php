@@ -53,7 +53,7 @@
                                         <th class="px-6 py-2">Qty</th>
                                         <th class="px-6 py-2">Dari Dinas</th>
                                         <th class="px-6 py-2">Keterangan/Kondisi</th>
-                                        <th class="px-6 py-2">Bukti</th>
+                                        <th class="px-6 py-2">buktikembali</th>
                                         <th class="px-6 py-2">Status</th>
                                          @if (Auth::user()->hakakses('petugas') || Auth::user()->hakakses('admin'))
 <th class="px-6 py-2">Action</th>
@@ -74,9 +74,9 @@
                                             <td class="px-6 py-2">{{ $item->masterdinaspenerima->namadinas }}</td>
                                             <td class="px-6 py-2">{{ $item->keteranganbarang }}</td>
                                             <td class="border textmid">
-                                                @if ($item->bukti)
+                                                @if ($item->buktikembali)
                                                     <!-- Periksa nama kolom yang sesuai -->
-                                                    <a href="{{ asset('bukti/' . $item->bukti) }}" class="btn btn-primary"
+                                                    <a href="{{ asset('buktikembali/' . $item->buktikembali) }}" class="btn btn-primary"
                                                         download>
                                                         Download
                                                     </a>

@@ -96,8 +96,8 @@ Route::prefix('dashboard')->middleware(['auth:sanctum'])->group(function() {
     Route::get('laporananalisisbarangpdf/filter={filter}', [AnalisisbarangController::class, 'laporananalisisbarangpdf'])->name('laporananalisisbarangpdf');
 
     // Barang Jarang
-    Route::get('laporannya/laporanbarangjarang', [BarangjarangController::class, 'cetakanbarangjarangpertanggal'])->name('laporanbarangjarang');
-    Route::get('laporanbarangjarang', [BarangjarangController::class, 'filterdateanbarangjarang'])->name('laporanbarangjarang');
+    Route::get('laporannya/laporanbarangjarang', [BarangjarangController::class, 'cetakbarangjarangpertanggal'])->name('laporanbarangjarang');
+    Route::get('laporanbarangjarang', [BarangjarangController::class, 'filterdatebarangjarang'])->name('filterdatebarangjarang');
     Route::get('laporanbarangjarangpdf/filter={filter}', [BarangjarangController::class, 'laporanbarangjarangpdf'])->name('laporanbarangjarangpdf');
 
     // Status

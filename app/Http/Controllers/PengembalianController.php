@@ -39,27 +39,20 @@ class PengembalianController extends Controller
 
 public function store(Request $request)
 {
-    // Validasi input
-    $validated = $request->validate([
-        'id_masterbarang' => 'required|exists:masterbarangs,id',
-        'qty' => 'required|integer',
-        'id_masterdinaspenerima' => 'required|exists:masterdinaspenerimas,id',
-        'tanggal' => 'required|date',
-        'keteranganbarang' => 'nullable|string',
-        'status' => 'required|string',
-        'bukti' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048'
+    // Validasi
+    $request->validate([
+        'buktikembali' => 'nullable|file|mimes:jpg,jpeg,png,pdf|max:2048',
     ]);
 
-    // Proses upload file
-    if ($request->hasFile('bukti')) {
-        $file = $request->file('bukti');
-        $filename = time() . '_' . $file->getClientOriginalName();
-        $path = $file->storeAs('public/bukti_pengembalian', $filename);
-        $validated['bukti'] = $filename;
+    $data = Pengembalian::create($request->all());
+    if($request->hasFile('buktikembali')) {
+        $request->file('buktikembali')->move('buktikembali/', $request->file('buktikembali')->getClientOriginalName());
+        $data->buktikembali = $request->file('buktikembali')->getClientOriginalName();
+        $data->save();
     }
 
-    // Simpan ke database
-    Pengembalian::create($validated);
+    // Simpan perubahan pada entri
+    $data->save();
 
     return redirect()->route('pengembalian.index')->with('success', 'Data telah ditambahkan');
 }

@@ -79,12 +79,12 @@
                                             </div>
 
                                             <div class="form-group">
-                                                <label for="bukti">File Surat</label>
-                                                <input type="file" name="bukti" class="form-control">
-                                                @if ($item->bukti)
+                                                <label for="buktikembali">File Surat</label>
+                                                <input type="file" name="buktikembali" class="form-control">
+                                                @if ($item->buktikembali)
                                                     <p>File saat ini: <a
-                                                            href="{{ url('bukti/' . $item->bukti) }}"
-                                                            target="_blank">{{ $item->bukti }}</a></p>
+                                                            href="{{ url('buktikembali/' . $item->buktikembali) }}"
+                                                            target="_blank">{{ $item->buktikembali }}</a></p>
                                                 @endif
                                             </div>
 

@@ -18,8 +18,8 @@ return new class extends Migration
             $table->string('id_masterdinaspenerima');
             $table->string('tanggal');
             $table->string('keteranganbarang');
-            $table->string('bukti');
-            $table->string('status')->nullable;
+            $table->string('buktikembali');
+            $table->string('status')->nullable();
             $table->timestamps();
         });
     }

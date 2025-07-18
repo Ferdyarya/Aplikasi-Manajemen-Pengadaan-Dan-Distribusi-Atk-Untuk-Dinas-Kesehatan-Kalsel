@@ -70,7 +70,7 @@
 
                                             <div class="form-group">
                                                 <label for="ketkerusakan">Keterangan kerusakan</label>
-                                                <input type="date" name="ketkerusakan"
+                                                <input type="text" name="ketkerusakan"
                                                     class="form-control @error('ketkerusakan') is-invalid @enderror"
                                                     id="ketkerusakan" value="{{ old('ketkerusakan') }}" required>
                                                 @error('ketkerusakan')
