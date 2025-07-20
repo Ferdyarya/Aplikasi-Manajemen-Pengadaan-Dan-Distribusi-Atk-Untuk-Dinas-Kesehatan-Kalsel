@@ -45,38 +45,49 @@ class PengirimanController extends Controller
     }
 
     public function store(Request $request)
-    {
-        $nosurat = $this->generatenokirim();
-        $data = $request->all();
-        $data['nokirim'] = $nosurat;
+{
+    $nosurat = $this->generatenokirim();
+    $data = $request->all();
+    $data['nokirim'] = $nosurat;
+
+    // Gunakan transaksi database agar rollback otomatis jika gagal
+    DB::beginTransaction();
+
+    try {
+        // Simpan data pengiriman
         $pengiriman = Pengiriman::create($data);
 
-        $distribarangData = [];
+        // Loop setiap distribusi barang
         foreach ($request->distribarang ?? [] as $p) {
-            $distribarangData[] = Distribarang::create([
+            $barang = Masterbarang::find($p['id_masterbarang']);
+
+            // Validasi stok
+            if (!$barang || $barang->qty < $p['qty']) {
+                DB::rollBack(); // batalkan semua perubahan
+                return redirect()->back()->with('error', 'Stok tidak mencukupi untuk ' . ($barang->nama ?? 'Barang tidak ditemukan'));
+            }
+
+            // Kurangi stok
+            $barang->qty -= $p['qty'];
+            $barang->save();
+
+            // Simpan distribusi barang
+            Distribarang::create([
                 'id_masterbarang' => $p['id_masterbarang'],
                 'qty' => $p['qty'],
                 'id_pengiriman' => $pengiriman->id,
             ]);
         }
 
-        // Ambil master barang terkait
-        $barang = Masterbarang::find($p['id_masterbarang']);
-
-        if ($barang) {
-            if ($barang->qty < $p['qty']) {
-                // Rollback distribusi jika stok kurang
-                $pengiriman->delete(); // rollback pengiriman
-                return redirect()->back()->with('error', 'Stok tidak mencukupi untuk ' . $barang->nama);
-            }
-
-            // Kurangi stok
-            $barang->qty -= $p['qty'];
-            $barang->save();
-        }
-
+        DB::commit(); // simpan semua perubahan
         return redirect()->route('pengiriman.index')->with('success', 'Data Telah Ditambah');
+
+    } catch (\Exception $e) {
+        DB::rollBack(); // batalkan semua jika error
+        return redirect()->back()->with('error', 'Terjadi kesalahan: ' . $e->getMessage());
     }
+}
+
 
 
 
@@ -127,11 +138,36 @@ class PengirimanController extends Controller
     }
 
     public function destroy(Pengiriman $pengiriman)
-    {
+{
+    DB::beginTransaction();
+
+    try {
+        // Ambil semua distribusi barang yang terkait
+        $distribusi = $pengiriman->distribarang;
+
+        foreach ($distribusi as $d) {
+            $barang = Masterbarang::find($d->id_masterbarang);
+
+            // Kembalikan stok
+            if ($barang) {
+                $barang->qty += $d->qty;
+                $barang->save();
+            }
+        }
+
+        // Hapus distribusi dan pengiriman
         $pengiriman->distribarang()->delete();
         $pengiriman->delete();
-        return redirect()->route('pengiriman.index')->with('success', 'Data Telah dihapus');
+
+        DB::commit();
+        return redirect()->route('pengiriman.index')->with('success', 'Data Telah dihapus dan stok dikembalikan');
+
+    } catch (\Exception $e) {
+        DB::rollBack();
+        return redirect()->back()->with('error', 'Gagal menghapus data: ' . $e->getMessage());
     }
+}
+
 
     //Approval Status
     public function updateStatusPengiriman(Request $request, $id)

@@ -56,7 +56,7 @@
                                     @foreach ($pengiriman->distribarang as $index => $item)
                                         <tr>
                                             <td class="px-6 py-2">{{ $index + 1 }}</td>
-                                            <td class="px-6 py-2">{{ $item->masterbarang->nokirim ?? 'N/A' }}</td>
+                                            <td class="px-6 py-2">{{ $item->masterbarang->kodebarang ?? 'N/A' }}</td>
                                             <td class="px-6 py-2">{{ $item->masterbarang->nama ?? 'N/A' }}</td>
                                             <td class="px-6 py-2">{{ $item->qty ?? 0 }}</td>
                                         </tr>

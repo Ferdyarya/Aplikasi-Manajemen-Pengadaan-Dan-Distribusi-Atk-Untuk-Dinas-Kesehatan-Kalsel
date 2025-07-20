@@ -2,22 +2,20 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\Pengembalian;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Rusak extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'id_masterbarang','qty','id_masterdinaspenerima','tanggal','ketkerusakan','bukti'
+        'id_masterpengembalian','bukti','tanggal'
     ];
 
-    public function masterdinaspenerima()
-    {
-        return $this->hasOne(Masterdinaspenerima::class, 'id', 'id_masterdinaspenerima');
-    }
-    public function masterbarang()
-    {
-        return $this->hasOne(Masterbarang::class, 'id', 'id_masterbarang');
-    }
+    public function masterpengembalian()
+{
+    return $this->belongsTo(Pengembalian::class, 'id_masterpengembalian', 'id');
+}
+
 }

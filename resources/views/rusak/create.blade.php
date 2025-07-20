@@ -36,28 +36,6 @@
                                             enctype="multipart/form-data">
                                             @csrf
 
-                                            <div class="form-group mb-3">
-                                                <label for="id_masterbarang">Nama Barang</label>
-                                                <select class="form-select" name="id_masterbarang" id="barang"
-                                                    style="border-radius: 8px;" data-placeholder="Pilih Barang">
-                                                    <option></option>
-                                                    @foreach ($masterbarang as $item)
-                                                        <option value="{{ $item->id }}">{{ $item->nama }}</option>
-                                                    @endforeach
-                                                </select>
-                                            </div>
-
-                                            <div class="form-group mb-3">
-                                                <label for="id_masterdinaspenerima">Dinas Penerima</label>
-                                                <select class="form-select" name="id_masterdinaspenerima" id="dinas"
-                                                    style="border-radius: 8px;" data-placeholder="Pilih Dinas Penerima">
-                                                    <option></option>
-                                                    @foreach ($masterdinaspenerima as $item)
-                                                        <option value="{{ $item->id }}">{{ $item->namadinas }}</option>
-                                                    @endforeach
-                                                </select>
-                                            </div>
-
                                             <div class="form-group">
                                                 <label for="tanggal">Tanggal</label>
                                                 <input type="date" name="tanggal"
@@ -68,25 +46,19 @@
                                                 @enderror
                                             </div>
 
-                                            <div class="form-group">
-                                                <label for="ketkerusakan">Keterangan kerusakan</label>
-                                                <input type="text" name="ketkerusakan"
-                                                    class="form-control @error('ketkerusakan') is-invalid @enderror"
-                                                    id="ketkerusakan" value="{{ old('ketkerusakan') }}" required>
-                                                @error('ketkerusakan')
-                                                    <div class="invalid-feedback">{{ $message }}</div>
-                                                @enderror
+                                            <div class="form-group" style="border-radius: 8px;">
+                                                <label for="id_masterpengembalian">Barang</label>
+                                                <select class="form-select" name="id_masterpengembalian" id="barang"
+                                                    style="border-radius: 8px;" data-placeholder="Pilih Barang">
+                                                    <option></option>
+                                                    @foreach ($masterpengembalian as $item)
+                                                        <option value="{{ $item->id }}">
+                                                            {{ $item->masterbarang->nama ?? 'Barang tidak ditemukan' }}
+                                                        </option>
+                                                    @endforeach
+                                                </select>
                                             </div>
 
-                                            <div class="form-group">
-                                                <label for="qty">Qty</label>
-                                                <input type="number" name="qty"
-                                                    class="form-control @error('qty') is-invalid @enderror"
-                                                    id="qty" value="{{ old('qty') }}" required placeholder="Masukan Qty">
-                                                @error('qty')
-                                                    <div class="invalid-feedback">{{ $message }}</div>
-                                                @enderror
-                                            </div>
 
                                             <div class="form-group">
                                                 <label for="exampleInputPassword1">Masukan File Foto Kerusakan</label>

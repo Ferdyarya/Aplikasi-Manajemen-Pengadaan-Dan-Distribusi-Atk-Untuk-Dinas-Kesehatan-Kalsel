@@ -37,24 +37,16 @@
                                             @csrf
                                             @method('PUT')
 
-                                            <div class="form-group mb-3">
-                                                <label for="id_masterbarang">Nama Barang</label>
-                                                <select class="form-select" name="id_masterbarang" id="barang"
-                                                    style="border-radius: 8px;" data-placeholder="Pilih Barang">
-                                                    <option></option>
-                                                    @foreach ($masterbarang as $item)
-                                                        <option value="{{ $item->id }}">{{ $item->nama }}</option>
-                                                    @endforeach
-                                                </select>
-                                            </div>
-
-                                            <div class="form-group mb-3">
-                                                <label for="id_masterdinaspenerima">Dinas Penerima</label>
-                                                <select class="form-select" name="id_masterdinaspenerima" id="dinas"
-                                                    style="border-radius: 8px;" data-placeholder="Pilih Dinas Penerima">
-                                                    <option></option>
-                                                    @foreach ($masterdinaspenerima as $item)
-                                                        <option value="{{ $item->id }}">{{ $item->nama }}</option>
+                                            <div class="form-group" style="border-radius: 8px;">
+                                                <label for="id_masterpengembalian">Barang</label>
+                                                <select class="form-select" name="id_masterpengembalian" id="barang"
+                                                    style="border-radius: 8px;" data-placeholder="Pilih Barang"
+                                                    required>
+                                                    <option value="" disabled>Pilih Barang</option>
+                                                    @foreach ($masterpengembalian as $item)
+                                                        <option value="{{ $item->id }}">
+                                                            {{ $item->pengembalian->nama ?? 'Barang tidak ditemukan' }}
+                                                        </option>
                                                     @endforeach
                                                 </select>
                                             </div>
@@ -63,18 +55,6 @@
                                                 <label for="tanggal">Tanggal</label>
                                                 <input value="{{ $item->tanggal }}" type="date" name="tanggal"
                                                     class="form-control" required>
-                                            </div>
-
-                                            <div class="form-group">
-                                                <label for="ketkerusakan">Keterangan Kerusakan</label>
-                                                <input value="{{ $item->ketkerusakan }}" type="text" name="ketkerusakan"
-                                                    class="form-control" required>
-                                            </div>
-
-                                            <div class="form-group">
-                                                <label for="qty">Qty</label>
-                                                <input type="number" name="qty" class="form-control"
-                                                    value="{{ $item->qty }}" required>
                                             </div>
 
                                             <div class="form-group">

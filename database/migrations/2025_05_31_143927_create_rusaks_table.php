@@ -13,11 +13,8 @@ return new class extends Migration
     {
         Schema::create('rusaks', function (Blueprint $table) {
             $table->id();
-            $table->string('id_masterbarang');
-            $table->string('qty');
-            $table->string('id_masterdinaspenerima');
+            $table->string('id_masterpengembalian');
             $table->string('tanggal');
-            $table->string('ketkerusakan');
             $table->string('bukti');
             $table->timestamps();
         });

@@ -79,14 +79,15 @@
                 <td><img src="{{ public_path('assets/logokesehatan.png') }}" alt="logo" width="140px"></td>
                 <td class="tengah">
                     <h4> DINAS KESEHATAN BANJARBARU </h4>
-                    <p>Gedung Berintan Lantai 1, Jl. A Yani KM. 40, Martapura, Cindai Alus, Martapura, Cindai Alus, Kec. Martapura, Kabupaten Banjar, Kalimantan Selatan</p>
+                    <p>Gedung Berintan Lantai 1, Jl. A Yani KM. 40, Martapura, Cindai Alus, Martapura, Cindai Alus, Kec.
+                        Martapura, Kabupaten Banjar, Kalimantan Selatan</p>
                 </td>
             </tr>
         </table>
     </div>
 
     <center>
-        <h5 class="mt-4">Rekap Laporan Pengiriman Alat Tulis Kedinasan</h5>
+        <h5 class="mt-4">Rekap Laporan Kerusakan Alat Tulis Kedinasan</h5>
     </center>
 
 
@@ -113,10 +114,10 @@
                 <tr>
                     <td class="px-6 py-6">{{ $loop->iteration }}</td>
                     <td class="px-6 py-2">{{ \Carbon\Carbon::parse($item->tanggal)->format('d M Y') }}</td>
-                    <td class="px-6 py-2">{{ $item->masterbarang->nama }}</td>
-                    <td class="px-6 py-2">{{ $item->qty }} PCS</td>
-                    <td class="px-6 py-2">{{ $item->masterdinaspenerima->namadinas }}</td>
-                    <td class="px-6 py-2">{{ $item->ketkerusakan}}</td>
+                    <td class="px-6 py-2">{{ $item->masterpengembalian->masterbarang->nama }}</td>
+                    <td class="px-6 py-2">{{ $item->masterpengembalian->qty }}</td>
+                    <td class="px-6 py-2">{{ $item->masterpengembalian->masterdinaspenerima->namadinas }}</td>
+                    <td class="px-6 py-2">{{ $item->masterpengembalian->keteranganbarang }}</td>
                 </tr>
             @endforeach
         </tbody>

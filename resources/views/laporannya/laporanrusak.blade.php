@@ -57,8 +57,8 @@
                                     <a href="{{ route('laporanrusakpdf', $filter) }}"
                                         class="btn btn-danger btn-block">Export PDF</a>
                                 @else
-                                    <a href="{{ route('laporanrusakpdf', 'all') }}"
-                                        class="btn btn-danger btn-block">Export PDF</a>
+                                    <a href="{{ route('laporanrusakpdf', 'all') }}" class="btn btn-danger btn-block">Export
+                                        PDF</a>
                                 @endif
                             </div>
                         </form>
@@ -68,12 +68,12 @@
                         <table class="table table-hover">
                             <thead>
                                 <tr>
-                                <th class="px-6 py-2">No</th>
-                                <th class="px-6 py-2">Tanggal</th>
-                                <th class="px-6 py-2">Nama Barang</th>
-                                <th class="px-6 py-2">Qty</th>
-                                <th class="px-6 py-2">Dinas Penerima</th>
-                                <th class="px-6 py-2">Keterangan Kerusakan</th>
+                                    <th class="px-6 py-2">No</th>
+                                    <th class="px-6 py-2">Tanggal</th>
+                                    <th class="px-6 py-2">Nama Barang</th>
+                                    <th class="px-6 py-2">Qty</th>
+                                    <th class="px-6 py-2">Dinas Penerima</th>
+                                    <th class="px-6 py-2">Keterangan Kerusakan</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -83,11 +83,13 @@
                                 @foreach ($laporanrusak as $index => $item)
                                     <tr>
                                         <td class="px-6 py-6">{{ $loop->iteration }}</td>
-                                        <td class="px-6 py-2">{{ \Carbon\Carbon::parse($item->tanggal)->format('d M Y') }}</td>
-                                        <td class="px-6 py-2">{{ $item->masterbarang->nama }}</td>
-                                        <td class="px-6 py-2">{{ $item->qty }} PCS</td>
-                                        <td class="px-6 py-2">{{ $item->masterdinaspenerima->namadinas }}</td>
-                                        <td class="px-6 py-2">{{ $item->ketkerusakan}}</td>
+                                        <td class="px-6 py-2">{{ \Carbon\Carbon::parse($item->tanggal)->format('d M Y') }}
+                                        </td>
+                                        <td class="px-6 py-2">{{ $item->masterpengembalian->masterbarang->nama }}</td>
+                                        <td class="px-6 py-2">{{ $item->masterpengembalian->qty }}</td>
+                                        <td class="px-6 py-2">
+                                            {{ $item->masterpengembalian->masterdinaspenerima->namadinas }}</td>
+                                        <td class="px-6 py-2">{{ $item->masterpengembalian->keteranganbarang }}</td>
                                     </tr>
                                 @endforeach
                             </tbody>

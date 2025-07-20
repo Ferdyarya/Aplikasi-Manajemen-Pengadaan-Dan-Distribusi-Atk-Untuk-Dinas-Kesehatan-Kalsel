@@ -11,11 +11,11 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 class Distribarang extends Model
 {
     use HasFactory;
-    protected $fillable = ['id_masterbarang', 'qty','id_pengiriman'];
+    protected $fillable = ['id_masterbarang', 'qty', 'id_pengiriman'];
 
     public function masterbarang()
     {
-        return $this->belongsTo(Masterbarang::class, 'id', 'id_masterbarang');
+        return $this->belongsTo(Masterbarang::class, 'id_masterbarang', 'id');
     }
 
     public function pengiriman()
