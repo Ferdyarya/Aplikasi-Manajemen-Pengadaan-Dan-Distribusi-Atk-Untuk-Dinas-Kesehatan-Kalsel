@@ -51,6 +51,9 @@ Route::prefix('dashboard')->middleware(['auth:sanctum'])->group(function() {
     Route::resource('masterdinaspenerima', MasterdinaspenerimaController::class);
     Route::resource('mastersupplyment', MastersupplymentController::class);
 
+    // Monitoring Barang
+    Route::get('/monitoringbarang', [MasterbarangController::class, 'monitoringbarang'])->name('monitoringbarang');
+
     // Data Tables Surat
     Route::resource('pengiriman', PengirimanController::class);
     Route::resource('pengembalian', PengembalianController::class);
