@@ -14,9 +14,6 @@ return new class extends Migration
         Schema::create('masterdinaspenerimas', function (Blueprint $table) {
             $table->id();
             $table->string('namadinas');
-            // $table->string('alamat');
-            // $table->string('daerah');
-            // $table->string('pimpinan');
             $table->timestamps();
         });
     }

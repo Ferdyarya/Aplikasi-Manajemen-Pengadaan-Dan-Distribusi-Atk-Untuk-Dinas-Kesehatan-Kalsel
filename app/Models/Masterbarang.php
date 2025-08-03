@@ -10,18 +10,20 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 class Masterbarang extends Model
 {
     use HasFactory;
-    protected $fillable = [
-        'nama','qty','kategori','kodebarang'
-    ];
+    protected $fillable = ['nama', 'kategori', 'kodebarang'];
 
     public function pengiriman()
-{
-    return $this->hasMany(Pengiriman::class);
-}
+    {
+        return $this->hasMany(Pengiriman::class);
+    }
 
     public function barangmasuk()
     {
         return $this->hasMany(Requestbarang::class);
     }
 
+    public function requestbarangs()
+    {
+        return $this->hasMany(Requestbarang::class, 'masterbarang_id');
+    }
 }

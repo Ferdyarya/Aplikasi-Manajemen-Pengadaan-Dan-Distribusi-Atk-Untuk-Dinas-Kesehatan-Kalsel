@@ -30,29 +30,43 @@ class RequestbarangController extends Controller
 {
     $masterbarang = Masterbarang::all();
     $mastersupplyment = Mastersupplyment::all();
+    $requestbarang = Requestbarang::with('masterbarang')->get(); // Tambahan penting
 
     return view('requestbarang.create', [
         'masterbarang' => $masterbarang,
         'mastersupplyment' => $mastersupplyment,
+        'requestbarang' => $requestbarang, // Kirim ke view
     ]);
 }
 
 public function store(Request $request)
 {
-    $data = $request->all();
+    $validated = $request->validate([
+        'id_masterbarang' => 'required|exists:masterbarangs,id',
+        'qty' => 'required|integer|min:1',
+        'id_supplyment' => 'required|exists:mastersupplyments,id',
+        'tanggal' => 'required|date',
+        'status' => 'nullable|string',
+        'kebutuhan' => 'nullable|string',
+    ]);
 
-    $requestBarang = Requestbarang::create($data);
+    // Cek apakah sudah ada data dengan kombinasi yang sama
+    $existing = Requestbarang::where('id_masterbarang', $validated['id_masterbarang'])
+                             ->where('id_supplyment', $validated['id_supplyment'])
+                             ->first();
 
-    $barang = Masterbarang::find($data['id_masterbarang']);
-
-    if ($barang) {
-        // Tambah qty ke master data barang
-        $barang->qty += $data['qty'];
-        $barang->save();
+    if ($existing) {
+        $existing->qty += $validated['qty'];
+        $existing->save();
+    } else {
+        Requestbarang::create($validated);
     }
 
-    return redirect()->route('requestbarang.index')->with('success', 'Data telah ditambahkan');
+    return redirect()->route('requestbarang.index')->with('success', 'Data berhasil disimpan');
 }
+
+
+
 
 
 
@@ -109,6 +123,19 @@ public function store(Request $request)
 
     return redirect()->route('requestbarang.index')->with('success', 'Status surat berhasil diperbarui.');
 }
+
+public function monitoringbarang(Request $request)
+    {
+        if ($request->has('search')) {
+            $requestbarang = Requestbarang::where('nama', 'LIKE', '%' . $request->search . '%')->paginate(10);
+        } else {
+            $requestbarang = Requestbarang::paginate(10);
+        }
+
+        return view('masterbarang.monitoring', [
+            'requestbarang' => $requestbarang,
+        ]);
+    }
 
 
 

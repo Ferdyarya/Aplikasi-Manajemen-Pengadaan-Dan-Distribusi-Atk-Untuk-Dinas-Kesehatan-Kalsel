@@ -66,9 +66,9 @@
                                             </div>
 
                                             <div class="form-group">
-                                                <label for="Kebutuhan">Kebutuhan</label>
+                                                <label for="Kebutuhan">Keterangann</label>
                                                 <input value="{{ $item->Kebutuhan }}" type="text" name="Kebutuhan"
-                                                    class="form-control" required placeholder="Masukan Kebutuhan">
+                                                    class="form-control" required placeholder="Masukan Keterangan">
                                             </div>
 
                                             <div class="form-group">

@@ -9,9 +9,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 class Requestbarang extends Model
 {
     use HasFactory;
-    protected $fillable = [
-        'id_masterbarang','qty','id_supplyment','tanggal','status','kebutuhan'
-    ];
+    protected $fillable = ['id_masterbarang', 'qty', 'id_supplyment', 'tanggal', 'status', 'kebutuhan'];
 
     public function mastersupplyment()
     {
@@ -20,5 +18,10 @@ class Requestbarang extends Model
     public function masterbarang()
     {
         return $this->hasOne(Masterbarang::class, 'id', 'id_masterbarang');
+    }
+
+    public function pengiriman()
+    {
+        return $this->hasMany(Pengiriman::class);
     }
 }

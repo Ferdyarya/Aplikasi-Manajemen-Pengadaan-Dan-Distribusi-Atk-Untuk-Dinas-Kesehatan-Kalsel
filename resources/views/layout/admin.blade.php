@@ -66,7 +66,7 @@
                       <span>
                         <i class="ti ti-article"></i>
                       </span>
-                      <span class="hide-menu">Master Bidang Penerima</span>
+                      <span class="hide-menu">Nama Bidang</span>
                     </a>
                   </li>
                   <li class="sidebar-item">
@@ -74,17 +74,18 @@
                       <span>
                         <i class="ti ti-article"></i>
                       </span>
-                      <span class="hide-menu">Master Supplyment</span>
+                      <span class="hide-menu">Nama Supplyment</span>
                     </a>
                   </li>
                   <li class="sidebar-item">
-                    <a class="sidebar-link" href="{{ route('monitoringbarang')}}" aria-expanded="false">
+                    <a class="sidebar-link" href="{{ route('masterbarang.index')}}" aria-expanded="false">
                       <span>
                         <i class="ti ti-article"></i>
                       </span>
-                      <span class="hide-menu">Master Barang</span>
+                      <span class="hide-menu">Nama Barang</span>
                     </a>
                   </li>
+                  
                   @endif
                   @if (Auth::user()->hakakses('pimpinan') || Auth::user()->hakakses('admin'))
                   <li class="nav-small-cap">
@@ -92,11 +93,11 @@
                     <span class="hide-menu">Data Table</span>
                 </li>
                 <li class="sidebar-item">
-                    <a class="sidebar-link" href="{{ route('masterbarang.index')}}" aria-expanded="false">
+                    <a class="sidebar-link" href="{{ route('monitoringbarang')}}" aria-expanded="false">
                       <span>
                         <i class="ti ti-menu"></i>
                       </span>
-                      <span class="hide-menu">Barang Tersedia</span>
+                      <span class="hide-menu">Stok Barang</span>
                     </a>
                   </li>
                 <li class="sidebar-item">
@@ -107,6 +108,8 @@
                         <span class="hide-menu">Pendistribusian Barang</span>
                     </a>
                 </li>
+                @endif
+                 @if (Auth::user()->hakakses('pimpinan') || Auth::user()->hakakses('admin')|| Auth::user()->hakakses('petugas'))
                 <li class="sidebar-item">
                     <a class="sidebar-link" href="{{ route('pengembalian.index') }}" aria-expanded="false">
                         <span>
@@ -115,6 +118,8 @@
                         <span class="hide-menu">Pengembalian Barang</span>
                     </a>
                 </li>
+                @endif
+                 @if (Auth::user()->hakakses('pimpinan') || Auth::user()->hakakses('admin'))
                 <li class="sidebar-item">
                     <a class="sidebar-link" href="{{ route('requestbarang.index') }}" aria-expanded="false">
                         <span>
@@ -140,15 +145,15 @@
                     </a>
                 </li>
                 @endif
-                @if (Auth::user()->hakakses('admin')|| Auth::user()->hakakses('petugas')|| Auth::user()->hakakses('pimpinan'))
                 <li class="sidebar-item">
                     <a class="sidebar-link" href="{{ route('analisisbarang.index') }}" aria-expanded="false">
                         <span>
                             <i class="ti ti-menu"></i>
                         </span>
-                        <span class="hide-menu">Analisis Kebutuhan Barang</span>
+                        <span class="hide-menu">Permintaan Barang</span>
                     </a>
                 </li>
+                 @if (Auth::user()->hakakses('pimpinan') || Auth::user()->hakakses('admin'))
                 <li class="sidebar-item">
                     <a class="sidebar-link" href="{{ route('barangjarang.index') }}" aria-expanded="false">
                         <span>
@@ -158,7 +163,7 @@
                     </a>
                 </li>
                 @endif
-                @if (Auth::user()->hakakses('admin')|| Auth::user()->hakakses('petugas'))
+                @if (Auth::user()->hakakses('admin'))
                   <li class="nav-small-cap">
                     <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
                     <span class="hide-menu">Report</span>
@@ -208,7 +213,7 @@
                       <span>
                         <i class="ti ti-report"></i>
                       </span>
-                      <span class="hide-menu">Lap Dinas Penerima Peralatan</span>
+                      <span class="hide-menu">Lap Penerima Barang</span>
                     </a>
                   </li>
                   <li class="sidebar-item">
@@ -216,7 +221,7 @@
                       <span>
                         <i class="ti ti-report"></i>
                       </span>
-                      <span class="hide-menu">Lap Analisis Kebutuhan Barang</span>
+                      <span class="hide-menu">Lap Permintaan Barang</span>
                     </a>
                   </li>
                   <li class="sidebar-item">

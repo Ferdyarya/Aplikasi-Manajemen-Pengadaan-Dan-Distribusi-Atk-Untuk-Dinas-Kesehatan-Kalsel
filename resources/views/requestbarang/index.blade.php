@@ -52,7 +52,7 @@
                                         <th class="px-6 py-2">Nama Barang</th>
                                         <th class="px-6 py-2">Qty</th>
                                         <th class="px-6 py-2">Supplyment</th>
-                                        <th class="px-6 py-2">Kebutuhan</th>
+                                        <th class="px-6 py-2">Keterangan</th>
                                         <th class="px-6 py-2">Status</th>
                                          @if (Auth::user()->hakakses('petugas') || Auth::user()->hakakses('admin'))
 <th class="px-6 py-2">Action</th>
@@ -69,7 +69,7 @@
                                             <td class="px-6 py-2">
                                                 {{ \Carbon\Carbon::parse($item->tanggal)->format('d M Y') }}</td>
                                             <td class="px-6 py-2">{{ $item->masterbarang->nama }}</td>
-                                            <td class="px-6 py-2">{{ $item->qty }} PCS</td>
+                                            <td class="px-6 py-2">{{ $item->qty }}</td>
                                             <td class="px-6 py-2">{{ $item->mastersupplyment->nama }}</td>
                                             <td class="px-6 py-2">{{ $item->kebutuhan }}</td>
                                             <td class="px-6 py-2">
@@ -91,7 +91,7 @@
                                                         <!-- Default to "Waiting for Verification" if not pimpinan -->
                                                     @endif
                                                     @if (Auth::user()->hakakses('pimpinan'))
-                                                        <form action="{{ route('updateStatusRawat', $item->id) }}"
+                                                        <form action="{{ route('updateStatusRequest', $item->id) }}"
                                                             method="POST">
                                                             @csrf
                                                             @method('PUT') <!-- Use PUT method to update the record -->

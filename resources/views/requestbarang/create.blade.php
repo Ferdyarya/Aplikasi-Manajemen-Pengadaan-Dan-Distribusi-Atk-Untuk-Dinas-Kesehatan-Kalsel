@@ -69,10 +69,10 @@
                                             </div>
 
                                             <div class="form-group">
-                                                <label for="kebutuhan">Kebutuhan</label>
+                                                <label for="kebutuhan">Keterangan</label>
                                                 <input type="text" name="kebutuhan"
                                                     class="form-control @error('kebutuhan') is-invalid @enderror"
-                                                    id="kebutuhan" value="{{ old('kebutuhan') }}" required placeholder="Masukan Kebutuhan">
+                                                    id="kebutuhan" value="{{ old('kebutuhan') }}" required placeholder="Masukan Keterangan">
                                                 @error('kebutuhan')
                                                     <div class="invalid-feedback">{{ $message }}</div>
                                                 @enderror

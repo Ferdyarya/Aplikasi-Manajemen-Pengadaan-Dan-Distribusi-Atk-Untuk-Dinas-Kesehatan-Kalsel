@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use PDF;
 use App\Models\Pengiriman;
 use App\Models\Distribarang;
+use App\Models\Requestbarang;
 use App\Models\Masterbarang;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -15,7 +16,7 @@ class PengirimanController extends Controller
     public function index(Request $request)
     {
         if ($request->has('search')) {
-            $pengiriman = Pengiriman::whereHas('masterbarang', function ($query) use ($request) {
+            $pengiriman = Pengiriman::whereHas('requestbarang', function ($query) use ($request) {
                 $query->where('nama', 'LIKE', '%' . $request->search . '%');
             })->paginate(10);
         } else {
@@ -29,67 +30,87 @@ class PengirimanController extends Controller
 
     public function detail($id)
     {
-        $pengiriman = Pengiriman::with(['distribarang.masterbarang'])->findOrFail($id);
+        $pengiriman = Pengiriman::with(['distribarang.requestbarang'])->findOrFail($id);
         return view('pengiriman.detail', compact('pengiriman'));
     }
 
     public function create()
     {
+        $requestbarang = Requestbarang::all();
         $masterbarang = Masterbarang::all();
         $masterdinaspenerima = Masterdinaspenerima::all();
 
         return view('pengiriman.create', [
-            'masterbarang' => $masterbarang,
+            'requestbarang' => $requestbarang,
             'masterdinaspenerima' => $masterdinaspenerima,
+            'masterbarang' => $masterbarang,
         ]);
     }
 
     public function store(Request $request)
-{
-    $nosurat = $this->generatenokirim();
-    $data = $request->all();
-    $data['nokirim'] = $nosurat;
+    {
+        $request->validate([
+            'id_masterdinaspenerima' => 'required|exists:masterdinaspenerimas,id',
+            'tanggal' => 'required|date',
+            'distribarang' => 'required|array|min:1',
+            'distribarang.*.id_masterbarang' => 'required|exists:masterbarangs,id',
+            'distribarang.*.qty' => 'required|integer|min:1',
+        ]);
 
-    // Gunakan transaksi database agar rollback otomatis jika gagal
-    DB::beginTransaction();
+        DB::beginTransaction();
 
-    try {
-        // Simpan data pengiriman
-        $pengiriman = Pengiriman::create($data);
+        try {
+            $data = $request->only(['id_masterdinaspenerima', 'tanggal']);
+            $data['nokirim'] = $this->generatenokirim(); // pastikan method ini ada dan valid
+            $pengiriman = Pengiriman::create($data);
 
-        // Loop setiap distribusi barang
-        foreach ($request->distribarang ?? [] as $p) {
-            $barang = Masterbarang::find($p['id_masterbarang']);
+            $distribusiData = [];
 
-            // Validasi stok
-            if (!$barang || $barang->qty < $p['qty']) {
-                DB::rollBack(); // batalkan semua perubahan
-                return redirect()->back()->with('error', 'Stok tidak mencukupi untuk ' . ($barang->nama ?? 'Barang tidak ditemukan'));
+            foreach ($request->distribarang as $item) {
+                // Cari Requestbarang yang stoknya cukup berdasarkan id_masterbarang
+                $requestbarang = Requestbarang::where('id_masterbarang', $item['id_masterbarang'])
+                    ->where('qty', '>=', $item['qty'])
+                    ->first();
+
+                if (!$requestbarang) {
+                    DB::rollBack();
+                    return response()->json([
+                        'success' => false,
+                        'message' => 'Stok tidak cukup atau barang tidak ditemukan untuk barang ID: ' . $item['id_masterbarang'],
+                    ], 400);
+                }
+
+                // Kurangi stok qty di Requestbarang
+                $requestbarang->qty -= $item['qty'];
+                $requestbarang->save();
+
+                // Simpan distribusi barang
+                $distribusi = Distribarang::create([
+                    'id_requestbarang' => $requestbarang->id,
+                    'id_masterbarang' => $item['id_masterbarang'],
+                    'qty' => $item['qty'],
+                    'id_pengiriman' => $pengiriman->id,
+                ]);
+
+                $distribusiData[] = $distribusi;
             }
 
-            // Kurangi stok
-            $barang->qty -= $p['qty'];
-            $barang->save();
+            DB::commit();
 
-            // Simpan distribusi barang
-            Distribarang::create([
-                'id_masterbarang' => $p['id_masterbarang'],
-                'qty' => $p['qty'],
-                'id_pengiriman' => $pengiriman->id,
+            return response()->json([
+                'success' => true,
+                'message' => 'Data pengiriman berhasil disimpan.',
+                'pengiriman' => $pengiriman,
+                'distribusi' => $distribusiData,
             ]);
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return response()->json([
+                'success' => false,
+                'message' => 'Terjadi kesalahan: ' . $e->getMessage(),
+            ], 500);
         }
-
-        DB::commit(); // simpan semua perubahan
-        return redirect()->route('pengiriman.index')->with('success', 'Data Telah Ditambah');
-
-    } catch (\Exception $e) {
-        DB::rollBack(); // batalkan semua jika error
-        return redirect()->back()->with('error', 'Terjadi kesalahan: ' . $e->getMessage());
     }
-}
-
-
-
 
     public function generatenokirim()
     {
@@ -116,12 +137,12 @@ class PengirimanController extends Controller
 
     public function edit(Pengiriman $pengiriman)
     {
-        $masterbarang = Masterbarang::all();
+        $requestbarang = Requestbarang::all();
         $masterdinaspenerima = Masterdinaspenerima::all();
 
         return view('pengiriman.edit', [
             'item' => $pengiriman,
-            'masterbarang' => $masterbarang,
+            'requestbarang' => $requestbarang,
             'masterdinaspenerima' => $masterdinaspenerima,
         ]);
     }
@@ -138,36 +159,36 @@ class PengirimanController extends Controller
     }
 
     public function destroy(Pengiriman $pengiriman)
-{
-    DB::beginTransaction();
+    {
+        DB::beginTransaction();
 
-    try {
-        // Ambil semua distribusi barang yang terkait
-        $distribusi = $pengiriman->distribarang;
+        try {
+            // Ambil semua distribusi barang yang terkait
+            $distribusi = $pengiriman->distribarang;
 
-        foreach ($distribusi as $d) {
-            $barang = Masterbarang::find($d->id_masterbarang);
+            foreach ($distribusi as $d) {
+                $barang = Requestbarang::find($d->id_requestbarang);
 
-            // Kembalikan stok
-            if ($barang) {
-                $barang->qty += $d->qty;
-                $barang->save();
+                // Kembalikan stok
+                if ($barang) {
+                    $barang->qty += $d->qty;
+                    $barang->save();
+                }
             }
+
+            // Hapus distribusi dan pengiriman
+            $pengiriman->distribarang()->delete();
+            $pengiriman->delete();
+
+            DB::commit();
+            return redirect()->route('pengiriman.index')->with('success', 'Data Telah dihapus dan stok dikembalikan');
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return redirect()
+                ->back()
+                ->with('error', 'Gagal menghapus data: ' . $e->getMessage());
         }
-
-        // Hapus distribusi dan pengiriman
-        $pengiriman->distribarang()->delete();
-        $pengiriman->delete();
-
-        DB::commit();
-        return redirect()->route('pengiriman.index')->with('success', 'Data Telah dihapus dan stok dikembalikan');
-
-    } catch (\Exception $e) {
-        DB::rollBack();
-        return redirect()->back()->with('error', 'Gagal menghapus data: ' . $e->getMessage());
     }
-}
-
 
     //Approval Status
     public function updateStatusPengiriman(Request $request, $id)
