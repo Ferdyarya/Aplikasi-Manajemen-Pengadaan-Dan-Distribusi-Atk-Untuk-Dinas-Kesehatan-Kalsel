@@ -40,12 +40,11 @@
                                             <div class="form-group" style="border-radius: 8px;">
                                                 <label for="id_masterpengembalian">Barang</label>
                                                 <select class="form-select" name="id_masterpengembalian" id="barang"
-                                                    style="border-radius: 8px;" data-placeholder="Pilih Barang"
-                                                    required>
-                                                    <option value="" disabled>Pilih Barang</option>
+                                                    style="border-radius: 8px;" data-placeholder="Pilih Barang">
+                                                    <option></option>
                                                     @foreach ($masterpengembalian as $item)
                                                         <option value="{{ $item->id }}">
-                                                            {{ $item->pengembalian->nama ?? 'Barang tidak ditemukan' }}
+                                                            {{ $item->masterrequest->masterbarang->nama ?? 'Barang tidak ditemukan' }}
                                                         </option>
                                                     @endforeach
                                                 </select>

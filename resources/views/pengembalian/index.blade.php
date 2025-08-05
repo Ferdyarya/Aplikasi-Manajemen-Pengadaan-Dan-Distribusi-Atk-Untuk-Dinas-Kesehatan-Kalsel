@@ -69,8 +69,8 @@
                                             <th class="px-6 py-2">{{ $index + $pengembalian->firstItem() }}</th>
                                             <td class="px-6 py-2">
                                                 {{ \Carbon\Carbon::parse($item->tanggal)->format('d M Y') }}</td>
-                                            <td class="px-6 py-2">{{ $item->masterbarang->nama }}</td>
-                                            <td class="px-6 py-2">{{ $item->qty }} PCS</td>
+                                            <td class="px-6 py-2">{{ $item->masterrequest->masterbarang->nama }}</td>
+                                            <td class="px-6 py-2">{{ $item->qty }}</td>
                                             <td class="px-6 py-2">{{ $item->masterdinaspenerima->namadinas }}</td>
                                             <td class="px-6 py-2">{{ $item->keteranganbarang }}</td>
                                             <td class="border textmid">

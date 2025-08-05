@@ -79,7 +79,7 @@
                 <td><img src="{{ public_path('assets/logokesehatan.png') }}" alt="logo" width="140px"></td>
                 <td class="tengah">
                     <h4> DINAS KESEHATAN BANJARBARU </h4>
-                    <p>Gedung Berintan Lantai 1, Jl. A Yani KM. 40, Martapura, Cindai Alus, Martapura, Cindai Alus, Kec. Martapura, Kabupaten Banjar, Kalimantan Selatan</p>
+                    <p>Gedung Berintan Lantai 1, Jl. A Yani KM. 40, Cindai Alus, Cindai Alus,Kabupaten Banjar, Kalimantan Selatan</p>
                 </td>
             </tr>
         </table>

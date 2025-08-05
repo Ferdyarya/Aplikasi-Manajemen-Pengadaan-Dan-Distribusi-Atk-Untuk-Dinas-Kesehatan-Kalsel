@@ -10,7 +10,7 @@ class Rusak extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'id_masterpengembalian','bukti','tanggal'
+        'id_masterpengembalian','bukti','tanggal','ketkerusakan','qty'
     ];
 
     public function masterpengembalian()

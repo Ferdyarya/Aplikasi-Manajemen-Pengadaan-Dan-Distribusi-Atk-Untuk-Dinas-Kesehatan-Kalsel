@@ -59,27 +59,40 @@
 
                                             <h5 class="mt-4">Distribusi Barang</h5>
                                             <div id="distribarang-wrapper">
-    <div class="form-row mb-2 align-items-center distribarang-row">
-        <div class="col">
-            <select name="distribarang[0][id_requestbarang]" class="form-select select-barang" required>
-                <option value="">Pilih Barang</option>
-                @foreach ($masterbarang as $barang)
-                    <option value="{{ $barang->id }}">{{ $barang->nama }}</option>
-                @endforeach
-            </select>
-        </div>
-        <div class="col">
-            <input type="number" name="distribarang[0][qty]" class="form-control" placeholder="Jumlah Qty">
-        </div>
-        <div class="col-auto">
-            <button type="button" class="btn btn-danger btn-sm remove-row">❌</button>
-        </div>
-    </div>
-</div>
+                                                <div class="form-row mb-2 align-items-center distribarang-row">
+                                                    <div class="col">
+                                                        <select name="distribarang[0][id_requestbarang]"
+                                                            class="form-select select-barang @error('distribarang.0.id_requestbarang') is-invalid @enderror"
+                                                            required>
+                                                            <option value="">Pilih Barang</option>
+                                                            @foreach ($requestbarang as $barang)
+                                                                <option value="{{ $barang->masterbarang->id }}"
+                                                                    {{ old('distribarang.0.id_requestbarang') == $barang->masterbarang->id ? 'selected' : '' }}>
+                                                                    {{ $barang->masterbarang->nama }}
+                                                                </option>
+                                                            @endforeach
+                                                        </select>
+                                                        @error('distribarang.0.id_requestbarang')
+                                                            <div class="invalid-feedback">{{ $message }}</div>
+                                                        @enderror
+                                                    </div>
+                                                    <div class="col">
+                                                        <input type="number" name="distribarang[0][qty]"
+                                                            class="form-control @error('distribarang.0.qty') is-invalid @enderror"
+                                                            value="{{ old('distribarang.0.qty') }}"
+                                                            placeholder="Jumlah Qty">
+                                                        @error('distribarang.0.qty')
+                                                            <div class="invalid-feedback">{{ $message }}</div>
+                                                        @enderror
+                                                    </div>
+                                                    <div class="col-auto">
+                                                        <button type="button"
+                                                            class="btn btn-danger btn-sm remove-row">❌</button>
+                                                    </div>
+                                                </div>
+                                            </div>
                                             <button type="button" class="btn btn-sm btn-success mb-3"
                                                 onclick="tambahDistribarang()">+ Tambah barang</button>
-
-
                                             <button type="submit" class="btn btn-primary">Submit</button>
                                         </form>
                                     </div>
@@ -148,55 +161,71 @@
     </script>
 
     <script>
-    let i = 1; // supaya index nama input bertambah
+        let i = 1; // supaya index nama input bertambah
 
-    function tambahDistribarang() {
-        // Buat option dari data JS
-        let options = `<option value="">Pilih Barang</option>`;
-        distribarangList.forEach(p => {
-            options += `<option value="${p.id}">${p.nama}</option>`;
-        });
+        function tambahDistribarang() {
+            // Buat option dari data JS
+            let options = `<option value="">Pilih Barang</option>`;
+            distribarangList.forEach(p => {
+                options += `<option value="${p.id}">${p.nama}</option>`;
+            });
 
-        // Append baris baru ke wrapper (tidak perlu div wrapper lagi di dalamnya)
-        $('#distribarang-wrapper').append(`
+            // Append baris baru ke wrapper (tidak perlu div wrapper lagi di dalamnya)
+            $('#distribarang-wrapper').append(`
             <div class="form-row mb-2 align-items-center distribarang-row">
                 <div class="col">
                     <select name="distribarang[${i}][id_requestbarang]"
-                        class="form-select select-barang" required>
-                        ${options}
+                        class="form-select select-barang @error('distribarang.[${i}].id_requestbarang') is-invalid @enderror"
+                        required>
+                        <option value="">Pilih Barang</option>
+                        @foreach ($requestbarang as $barang)
+                            <option value="{{ $barang->masterbarang->id }}"
+                                {{ old('distribarang.[${i}].id_requestbarang') == $barang->masterbarang->id ? 'selected' : '' }}>
+                                {{ $barang->masterbarang->nama }}
+                            </option>
+                        @endforeach
                     </select>
+                    @error('distribarang.[${i}].id_requestbarang')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
                 </div>
                 <div class="col">
-                    <input type="number" name="distribarang[${i}][qty]" class="form-control"
+                    <input type="number" name="distribarang[${i}][qty]"
+                        class="form-control @error('distribarang.[${i}].qty') is-invalid @enderror"
+                        value="{{ old('distribarang.[${i}].qty') }}"
                         placeholder="Jumlah Qty">
+                    @error('distribarang.[${i}].qty')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
                 </div>
                 <div class="col-auto">
-                    <button type="button" class="btn btn-danger btn-sm remove-row">❌</button>
+                    <button type="button"
+                        class="btn btn-danger btn-sm remove-row">❌</button>
                 </div>
             </div>
         `);
 
-        // Aktifkan select2 untuk dropdown baru
-        $('.select-barang').select2({
-            theme: 'bootstrap-5'
-        });
+            // Aktifkan select2 untuk dropdown baru
+            $('.select-barang').select2({
+                theme: 'bootstrap-5'
+            });
 
-        i++;
-    }
-
-    // Hapus baris
-    $(document).on('click', '.remove-row', function() {
-        if ($('.distribarang-row').length > 1) {
-            $(this).closest('.distribarang-row').remove();
-        } else {
-            alert('Minimal harus ada 1 baris barang.');
+            i++;
         }
-    });
-</script>
+
+        // Hapus baris
+        $(document).on('click', '.remove-row', function() {
+            if ($('.distribarang-row').length > 1) {
+                $(this).closest('.distribarang-row').remove();
+            } else {
+                alert('Minimal harus ada 1 baris barang.');
+            }
+        });
+    </script>
 
 
     <script>
-        const distribarangList = @json($masterbarang);
+        const distribarangList = @json($requestbarang);
 
         $(document).ready(function() {
             $('.select-barang').select2({

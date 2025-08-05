@@ -66,8 +66,8 @@
                                 <th class="px-6 py-2">{{ $index + $kekurangan->firstItem() }}</th>
                                 <td class="px-6 py-2">{{ \Carbon\Carbon::parse($item->tanggal)->format('d M Y') }}</td>
                                 <td class="px-6 py-2">{{ $item->masterbarang->nama }}</td>
-                                <td class="px-6 py-2">{{ $item->qty }} PCS</td>
-                                <td class="px-6 py-2">{{ $item->qtyditerima }} PCS</td>
+                                <td class="px-6 py-2">{{ $item->qty }}</td>
+                                <td class="px-6 py-2">{{ $item->qtyditerima }}</td>
                                 @if (Auth::user()->hakakses('petugas')|| Auth::user()->hakakses('admin'))
                                 <td class="px-6 py-2">
                                     <a href="{{ route('kekurangan.edit', $item->id) }}" class="btn btn-primary">Edit</a>

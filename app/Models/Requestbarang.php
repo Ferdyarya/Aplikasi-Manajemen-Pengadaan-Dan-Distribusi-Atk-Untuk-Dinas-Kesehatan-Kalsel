@@ -24,4 +24,5 @@ class Requestbarang extends Model
     {
         return $this->hasMany(Pengiriman::class);
     }
+    
 }

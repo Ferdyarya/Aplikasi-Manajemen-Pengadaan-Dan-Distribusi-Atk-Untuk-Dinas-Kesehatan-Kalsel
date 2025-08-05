@@ -29,86 +29,86 @@ class PengirimanController extends Controller
     }
 
     public function detail($id)
-    {
-        $pengiriman = Pengiriman::with(['distribarang.requestbarang'])->findOrFail($id);
-        return view('pengiriman.detail', compact('pengiriman'));
-    }
+{
+    $pengiriman = Pengiriman::with([
+        'distribarang.requestbarang',
+        'distribarang.masterbarang' // opsional, jika kamu butuh
+    ])->findOrFail($id);
+
+    return view('pengiriman.detail', compact('pengiriman'));
+}
 
     public function create()
     {
-        $requestbarang = Requestbarang::all();
-        $masterbarang = Masterbarang::all();
+        $requestbarang = Requestbarang::with(['masterbarang'])->get();
+        // $masterbarang = Masterbarang::all();
         $masterdinaspenerima = Masterdinaspenerima::all();
 
         return view('pengiriman.create', [
             'requestbarang' => $requestbarang,
             'masterdinaspenerima' => $masterdinaspenerima,
-            'masterbarang' => $masterbarang,
+            // 'masterbarang' => $masterbarang,
         ]);
     }
 
     public function store(Request $request)
     {
+        // return $request->all();
         $request->validate([
             'id_masterdinaspenerima' => 'required|exists:masterdinaspenerimas,id',
             'tanggal' => 'required|date',
             'distribarang' => 'required|array|min:1',
-            'distribarang.*.id_masterbarang' => 'required|exists:masterbarangs,id',
+            'distribarang.*.id_requestbarang' => 'required|exists:requestbarangs,id',
             'distribarang.*.qty' => 'required|integer|min:1',
         ]);
 
         DB::beginTransaction();
 
         try {
+            // Data utama pengiriman
             $data = $request->only(['id_masterdinaspenerima', 'tanggal']);
-            $data['nokirim'] = $this->generatenokirim(); // pastikan method ini ada dan valid
+            $data['nokirim'] = $this->generatenokirim(); // generate no kirim
             $pengiriman = Pengiriman::create($data);
 
-            $distribusiData = [];
-
+            // Loop distribusi barang
             foreach ($request->distribarang as $item) {
-                // Cari Requestbarang yang stoknya cukup berdasarkan id_masterbarang
-                $requestbarang = Requestbarang::where('id_masterbarang', $item['id_masterbarang'])
-                    ->where('qty', '>=', $item['qty'])
-                    ->first();
+                // $requestbarang = Requestbarang::where('id', $item['id_requestbarang'])->where('qty', '>=', $item['qty'])->first();
 
-                if (!$requestbarang) {
+                $requestbarang = Requestbarang::where('id', $item['id_requestbarang'])->lockForUpdate()->first();
+
+                if (!$requestbarang || $requestbarang->qty < $item['qty']) {
                     DB::rollBack();
-                    return response()->json([
-                        'success' => false,
-                        'message' => 'Stok tidak cukup atau barang tidak ditemukan untuk barang ID: ' . $item['id_masterbarang'],
-                    ], 400);
+                    return back()
+                        ->withErrors(['stok' => 'Stok tidak cukup atau ID requestbarang tidak valid.'])
+                        ->withInput();
                 }
 
-                // Kurangi stok qty di Requestbarang
+                // Kurangi stok
                 $requestbarang->qty -= $item['qty'];
                 $requestbarang->save();
 
                 // Simpan distribusi barang
-                $distribusi = Distribarang::create([
+                Distribarang::create([
                     'id_requestbarang' => $requestbarang->id,
-                    'id_masterbarang' => $item['id_masterbarang'],
+                    'id_masterbarang' => $requestbarang->id_masterbarang,
                     'qty' => $item['qty'],
                     'id_pengiriman' => $pengiriman->id,
                 ]);
-
-                $distribusiData[] = $distribusi;
             }
 
             DB::commit();
-
-            return response()->json([
-                'success' => true,
-                'message' => 'Data pengiriman berhasil disimpan.',
-                'pengiriman' => $pengiriman,
-                'distribusi' => $distribusiData,
-            ]);
+            return redirect()->route('pengiriman.index')->with('success', 'Data telah ditambahkan.');
         } catch (\Exception $e) {
             DB::rollBack();
-            return response()->json([
-                'success' => false,
-                'message' => 'Terjadi kesalahan: ' . $e->getMessage(),
-            ], 500);
+            // return back()->withErrors(['error' => 'Terjadi kesalahan: ' . $e->getMessage()])->withInput();
+            return response()->json(
+                [
+                    'success' => false,
+                    'message' => 'Terjadi kesalahan saat menyimpan pengiriman.',
+                    'error' => $e->getMessage(),
+                ],
+                500,
+            );
         }
     }
 

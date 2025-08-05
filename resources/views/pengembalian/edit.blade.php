@@ -38,12 +38,12 @@
                                             @method('PUT')
 
                                             <div class="form-group mb-3">
-                                                <label for="id_masterbarang">Nama Barang</label>
-                                                <select class="form-select" name="id_masterbarang" id="barang"
+                                                <label for="id_requestbarang">Nama Barang</label>
+                                                 <select class="form-select" name="id_requestbarang" id="barang"
                                                     style="border-radius: 8px;" data-placeholder="Pilih Barang">
                                                     <option></option>
-                                                    @foreach ($masterbarang as $item)
-                                                        <option value="{{ $item->id }}">{{ $item->nama }}</option>
+                                                    @foreach ($requestbarang as $item)
+                                                        <option value="{{ $item->id }}">{{ $item->masterbarang->nama }}</option>
                                                     @endforeach
                                                 </select>
                                             </div>

@@ -12,27 +12,29 @@ use App\Models\Masterdinaspenerima;
 class RusakController extends Controller
 {
     public function index(Request $request)
-    {
-        $query = Rusak::with('masterpengembalian');
+{
+    // Base query dengan eager load ke relasi berantai
+    $query = Rusak::with('masterpengembalian.masterrequest.masterbarang');
 
-        if ($request->has('search')) {
-            $rusak = Rusak::with('masterpengembalian.masterbarang')
-                ->whereHas('masterpengembalian.masterbarang', function ($query) use ($request) {
-                    $query->where('nama', 'LIKE', '%' . $request->search . '%');
-                })
-                ->paginate(10);
-        } else {
-            $rusak = Rusak::with('masterpengembalian.masterbarang')->paginate(10);
-        }
-
-        return view('rusak.index', [
-            'rusak' => $rusak,
-        ]);
+    // Jika ada pencarian
+    if ($request->has('search')) {
+        $query->whereHas('masterpengembalian.masterrequest.masterbarang', function ($q) use ($request) {
+            $q->where('nama', 'like', '%' . $request->search . '%');
+        });
     }
+
+    // Paginate hasil akhir
+    $rusak = $query->paginate(10);
+
+    return view('rusak.index', [
+        'rusak' => $rusak,
+    ]);
+}
+
 
     public function create()
     {
-        $masterpengembalian = Pengembalian::with('masterbarang')->get();
+        $masterpengembalian = Pengembalian::with('masterrequest.masterbarang')->get();
 
         return view('rusak.create', [
             'masterpengembalian' => $masterpengembalian,
@@ -63,7 +65,7 @@ class RusakController extends Controller
     public function edit($id)
 {
     $item = Rusak::findOrFail($id);
-    $masterpengembalian = Pengembalian::with('masterbarang')->get();
+    $masterpengembalian = Pengembalian::with('masterrequest.masterbarang')->get();
 
     return view('rusak.edit', compact('item', 'masterpengembalian'));
 }

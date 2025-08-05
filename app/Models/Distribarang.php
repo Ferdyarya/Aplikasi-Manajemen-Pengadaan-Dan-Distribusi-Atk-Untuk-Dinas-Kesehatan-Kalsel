@@ -11,7 +11,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 class Distribarang extends Model
 {
     use HasFactory;
-    protected $fillable = ['id_requestbarang', 'qty', 'id_pengiriman'];
+    protected $fillable = ['id_requestbarang', 'qty', 'id_pengiriman', 'id_masterbarang'];
 
     public function requestbarang()
     {
@@ -22,5 +22,10 @@ class Distribarang extends Model
     {
         return $this->belongsTo(Pengiriman::class, 'id_pengiriman', 'id');
     }
-    
+
+    public function masterbarang()
+{
+    return $this->belongsTo(Masterbarang::class, 'id_masterbarang');
+}
+
 }

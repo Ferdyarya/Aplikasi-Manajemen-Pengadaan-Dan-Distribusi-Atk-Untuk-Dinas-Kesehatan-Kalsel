@@ -85,8 +85,12 @@
                                         <td class="px-6 py-6">{{ $loop->iteration }}</td>
                                         <td class="px-6 py-2">{{ \Carbon\Carbon::parse($item->tanggal)->format('d M Y') }}
                                         </td>
-                                        <td class="px-6 py-2">{{ $item->masterpengembalian->masterbarang->nama }}</td>
-                                        <td class="px-6 py-2">{{ $item->masterpengembalian->qty }}</td>
+                                        <td class="px-6 py-2">
+                                            {{ optional(optional(optional($item->masterpengembalian)->masterrequest)->masterbarang)->nama ?? '-' }}
+                                        </td>
+                                        <td class="px-6 py-2">
+                                            {{ optional(optional(optional($item->masterpengembalian)->masterrequest)->masterbarang)->qty ?? '-' }}
+                                        </td>
                                         <td class="px-6 py-2">
                                             {{ $item->masterpengembalian->masterdinaspenerima->namadinas }}</td>
                                         <td class="px-6 py-2">{{ $item->masterpengembalian->keteranganbarang }}</td>

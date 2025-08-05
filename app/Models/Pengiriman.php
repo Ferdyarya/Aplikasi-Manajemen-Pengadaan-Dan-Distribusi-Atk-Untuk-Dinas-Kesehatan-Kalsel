@@ -11,11 +11,16 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 class Pengiriman extends Model
 {
     use HasFactory;
-    protected $fillable = ['nokirim', 'id_masterdinaspenerima', 'tanggal', 'status', 'id_distribarang'];
+    protected $fillable = ['nokirim', 'id_masterdinaspenerima', 'tanggal', 'status', 'id_distribarang','id_requestbarang'];
 
     public function masterdinaspenerima()
     {
         return $this->hasOne(Masterdinaspenerima::class, 'id', 'id_masterdinaspenerima');
+    }
+
+    public function requestbarang()
+    {
+        return $this->hasOne(Requestbarang::class, 'id', 'id_requestbarang');
     }
 
     public function distribarang()

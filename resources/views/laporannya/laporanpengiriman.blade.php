@@ -85,7 +85,7 @@
                                         <td class="px-6 py-6">{{ $loop->iteration }}</td>
                                         <td class="px-6 py-2">{{ \Carbon\Carbon::parse($item->tanggal)->format('d M Y') }}</td>
                                         {{-- <td class="px-6 py-2">{{ $item->masterbarang->nama }}</td>
-                                        <td class="px-6 py-2">{{ $item->qty }} PCS</td> --}}
+                                        <td class="px-6 py-2">{{ $item->qty }}</td> --}}
                                         <td class="px-6 py-2">{{ $item->masterdinaspenerima->namadinas }}</td>
                                         <td class="px-6 py-2">
                                             @if($item->status == 'Terverifikasi')

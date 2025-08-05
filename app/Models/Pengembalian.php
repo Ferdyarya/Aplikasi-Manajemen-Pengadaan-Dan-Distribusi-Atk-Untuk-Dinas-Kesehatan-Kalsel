@@ -2,22 +2,23 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\Requestbarang;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Pengembalian extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'id_masterbarang','qty','id_masterdinaspenerima','tanggal','keteranganbarang','buktikembali','status'
+        'id_requestbarang','qty','id_masterdinaspenerima','tanggal','keteranganbarang','buktikembali','status'
     ];
 
     public function masterdinaspenerima()
     {
         return $this->hasOne(Masterdinaspenerima::class, 'id', 'id_masterdinaspenerima');
     }
-    public function masterbarang()
+    public function masterrequest()
     {
-        return $this->hasOne(Masterbarang::class, 'id', 'id_masterbarang');
+        return $this->hasOne(Requestbarang::class, 'id', 'id_requestbarang');
     }
 }

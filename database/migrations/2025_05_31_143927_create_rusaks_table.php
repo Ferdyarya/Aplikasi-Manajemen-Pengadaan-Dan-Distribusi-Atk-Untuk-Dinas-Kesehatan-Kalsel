@@ -15,6 +15,8 @@ return new class extends Migration
             $table->id();
             $table->string('id_masterpengembalian');
             $table->string('tanggal');
+            $table->string('qty');
+            $table->string('ketkerusakan');
             $table->string('bukti');
             $table->timestamps();
         });

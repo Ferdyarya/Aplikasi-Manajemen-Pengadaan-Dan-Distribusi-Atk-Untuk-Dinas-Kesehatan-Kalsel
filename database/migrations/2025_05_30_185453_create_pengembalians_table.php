@@ -13,7 +13,8 @@ return new class extends Migration
     {
         Schema::create('pengembalians', function (Blueprint $table) {
             $table->id();
-            $table->string('id_masterbarang');
+            $table->string('id_requestbarang');
+            // $table->string('id_masterbarang');
             $table->string('qty');
             $table->string('id_masterdinaspenerima');
             $table->string('tanggal');

@@ -70,8 +70,7 @@
                 <td><img src="{{ public_path('assets/logo-sekolah.png') }}" alt="logo" width="140px"></td>
                 <td class="tengah">
                     <h4>SMK NEGERI 3 MARABAHAN</h4>
-                    <p>Jl. Purwosari No.KM. 6, Purwosari Baru, Kec. Tamban, Kabupaten Barito Kuala, Kalimantan Selatan
-                        70566</p>
+                    <p>Gedung Berintan Lantai 1, Jl. A Yani KM. 40, Cindai Alus, Cindai Alus,Kabupaten Banjar, Kalimantan Selatan</p>
                 </td>
             </tr>
         </table>

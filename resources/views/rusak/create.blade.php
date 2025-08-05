@@ -53,7 +53,7 @@
                                                     <option></option>
                                                     @foreach ($masterpengembalian as $item)
                                                         <option value="{{ $item->id }}">
-                                                            {{ $item->masterbarang->nama ?? 'Barang tidak ditemukan' }}
+                                                            {{ $item->masterrequest->masterbarang->nama ?? 'Barang tidak ditemukan' }}
                                                         </option>
                                                     @endforeach
                                                 </select>

@@ -54,9 +54,9 @@
                                         {{-- <th class="px-6 py-2">Qty</th> --}}
                                         <th class="px-6 py-2">Dinas Pengirim</th>
                                         <th class="px-6 py-2">Status</th>
-                                         @if (Auth::user()->hakakses('petugas') || Auth::user()->hakakses('admin'))
-<th class="px-6 py-2">Action</th>
-@endif
+                                        @if (Auth::user()->hakakses('petugas') || Auth::user()->hakakses('admin'))
+                                            <th class="px-6 py-2">Action</th>
+                                        @endif
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -70,7 +70,7 @@
                                             <td class="px-6 py-2">
                                                 {{ \Carbon\Carbon::parse($item->tanggal)->format('d M Y') }}</td>
                                             {{-- <td class="px-6 py-2">{{ $item->masterbarang->nama }}</td> --}}
-                                            {{-- <td class="px-6 py-2">{{ $item->qty }} PCS</td> --}}
+                                            {{-- <td class="px-6 py-2">{{ $item->qty }}</td> --}}
                                             <td class="px-6 py-2">{{ $item->masterdinaspenerima->namadinas }}</td>
                                             <td class="px-6 py-2">
                                                 @if ($item->status == 'Terkirim')
@@ -111,19 +111,19 @@
                                             </td>
                                             @if (Auth::user()->hakakses('petugas') || Auth::user()->hakakses('admin'))
                                                 <td class="px-6 py-2">
-                                                    <a href="{{ route('pengiriman.edit', $item->id) }}"
-                                                        class="btn btn-primary">Edit</a>
+                                                    {{-- <a href="{{ route('pengiriman.edit', $item->id) }}"
+                                                        class="btn btn-primary">Edit</a> --}}
                                                     <form action="{{ route('pengiriman.destroy', $item->id) }}"
                                                         method="POST" style="display:inline;">
                                                         @csrf
                                                         @method('delete')
                                                         <button type="submit" class="btn btn-danger">Hapus</button>
                                                     </form>
-                                                    @if (Auth::user()->hakakses('petugas')|| Auth::user()->hakakses('admin')|| Auth::user()->hakakses('pimpinan'))
-                                                    <a href="{{ route('pengiriman.detail', $item->id) }}"
-                                                        class="mt-1 btn btn-primary">
-                                                        Detail
-                                                    </a>
+                                                    @if (Auth::user()->hakakses('petugas') || Auth::user()->hakakses('admin') || Auth::user()->hakakses('pimpinan'))
+                                                        <a href="{{ route('pengiriman.detail', $item->id) }}"
+                                                            class="mt-1 btn btn-primary">
+                                                            Detail
+                                                        </a>
                                                     @endif
                                                 </td>
                                             @endif

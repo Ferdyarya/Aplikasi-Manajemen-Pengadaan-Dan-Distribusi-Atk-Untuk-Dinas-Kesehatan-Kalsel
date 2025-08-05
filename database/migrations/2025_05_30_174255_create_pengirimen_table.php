@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('nokirim')->nullable();
             $table->string('id_masterdinaspenerima');
+            $table->string('id_requestbarang')->nullable();
             $table->string('tanggal');
             $table->string('status')->nullable();
             $table->timestamps();

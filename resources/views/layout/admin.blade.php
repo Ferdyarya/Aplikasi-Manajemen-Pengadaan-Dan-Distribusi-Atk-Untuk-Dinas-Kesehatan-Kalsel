@@ -85,7 +85,7 @@
                       <span class="hide-menu">Nama Barang</span>
                     </a>
                   </li>
-                  
+
                   @endif
                   @if (Auth::user()->hakakses('pimpinan') || Auth::user()->hakakses('admin'))
                   <li class="nav-small-cap">
@@ -173,7 +173,7 @@
                       <span>
                         <i class="ti ti-report"></i>
                       </span>
-                      <span class="hide-menu">Lap Pengiriman</span>
+                      <span class="hide-menu">Lap Pendistribusian</span>
                     </a>
                   </li>
                   <li class="sidebar-item">

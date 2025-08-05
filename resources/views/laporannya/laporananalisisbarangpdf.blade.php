@@ -79,8 +79,7 @@
                 <td><img src="{{ public_path('assets/logokesehatan.png') }}" alt="logo" width="140px"></td>
                 <td class="tengah">
                     <h4> DINAS KESEHATAN BANJARBARU </h4>
-                    <p>Gedung Berintan Lantai 1, Jl. A Yani KM. 40, Martapura, Cindai Alus, Martapura, Cindai Alus, Kec.
-                        Martapura, Kabupaten Banjar, Kalimantan Selatan</p>
+                    <p>Gedung Berintan Lantai 1, Jl. A Yani KM. 40, Cindai Alus, Cindai Alus,Kabupaten Banjar, Kalimantan Selatan</p>
 
                 </td>
             </tr>
@@ -117,16 +116,14 @@
                     <td class="px-6 py-6">{{ $loop->iteration }}</td>
                     <td class="px-6 py-2">{{ \Carbon\Carbon::parse($item->tanggal)->format('d M Y') }}</td>
                     <td class="px-6 py-2">{{ $item->masterbarang->nama }}</td>
-                    <td class="px-6 py-2">{{ $item->qty }} PCS</td>
+                    <td class="px-6 py-2">{{ $item->qty }}</td>
                     <td class="px-6 py-2">{{ $item->masterdinaspenerima->namadinas }}</td>
                     <td class="px-6 py-2">{{ $item->keterangan }}</td>
                     <td class="px-6 py-2">
                         @if ($item->status == 'Terverifikasi')
                             <span class="p-2 mb-2 bg-success text-black rounded">Terverifikasi</span>
-                            <!-- Green for verified -->
                         @elseif($item->status == 'Ditolak')
                             <span class="p-2 mb-2 bg-danger text-black rounded">Ditolak</span>
-                            <!-- Red/orange for rejected -->
                         @endif
                     </td>
                 </tr>
