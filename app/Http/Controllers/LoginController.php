@@ -11,13 +11,18 @@ class LoginController extends Controller
         return view('login');
     }
 
-    public function loginuser(Request $request) {
-        // return($request->all());
-       if(Auth::attempt($request->only('email','password'))){
-            return redirect('/');
-        }
-        return redirect('login')->with('toast_success', 'Login Berhasil');
+    public function loginuser(Request $request)
+{
+    $credentials = $request->only('email', 'password');
+
+    if (Auth::attempt($credentials)) {
+        return redirect('/')->with('toast_success', 'Login Berhasil');
     }
+
+    return redirect('login')->withErrors([
+        'login' => 'Email atau password salah.',
+    ])->withInput();
+}
 
     public function logout() {
         Auth::logout();
