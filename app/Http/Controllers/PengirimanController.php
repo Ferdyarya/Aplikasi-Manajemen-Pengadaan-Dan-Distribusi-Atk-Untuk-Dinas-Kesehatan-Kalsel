@@ -10,6 +10,8 @@ use App\Models\Masterbarang;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\Masterdinaspenerima;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\LowStockNotification;
 
 class PengirimanController extends Controller
 {
@@ -86,6 +88,16 @@ class PengirimanController extends Controller
                 // Kurangi stok
                 $requestbarang->qty -= $item['qty'];
                 $requestbarang->save();
+
+                // Cek stok rendah untuk notifikasi email
+                if ($requestbarang->qty < 5) {
+                    try {
+                        Mail::to('ferdyar5@gmail.com')->send(new LowStockNotification($requestbarang));
+                    } catch (\Exception $e) {
+                        // Log error atau abaikan agar transaksi utama tetap berjalan
+                        \Illuminate\Support\Facades\Log::error("Gagal mengirim email stok rendah: " . $e->getMessage());
+                    }
+                }
 
                 // Simpan distribusi barang
                 Distribarang::create([

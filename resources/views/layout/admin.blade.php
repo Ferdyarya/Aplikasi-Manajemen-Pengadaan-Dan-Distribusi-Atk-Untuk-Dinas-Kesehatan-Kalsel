@@ -8,6 +8,7 @@
         <link rel="shortcut icon" type="image/png" href="{{ asset('template2/assets/images/logos/favicon.png') }}" />
         <link rel="stylesheet" href="{{ asset('template2/assets/css/styles.min.css') }}" />
         <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+        @stack('css')
     </head>
 
     <body>
@@ -301,6 +302,7 @@
         <script src="{{ asset('template2/assets/js/dashboard.js') }}"></script>
         <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+        @stack('scripts')
     </body>
 
     </html>

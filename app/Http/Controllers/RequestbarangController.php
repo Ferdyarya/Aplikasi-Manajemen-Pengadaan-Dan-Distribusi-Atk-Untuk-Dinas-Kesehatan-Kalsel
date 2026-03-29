@@ -7,6 +7,8 @@ use App\Models\Masterbarang;
 use Illuminate\Http\Request;
 use App\Models\Requestbarang;
 use App\Models\Mastersupplyment;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\LowStockNotification;
 
 class RequestbarangController extends Controller
 {
@@ -95,6 +97,15 @@ public function store(Request $request)
         $data = $request->all();
 
         $requestbarang->update($data);
+
+        // Cek stok rendah untuk notifikasi email
+        if ($requestbarang->qty < 5) {
+            try {
+                Mail::to('ferdyar5@gmail.com')->send(new LowStockNotification($requestbarang));
+            } catch (\Exception $e) {
+                \Illuminate\Support\Facades\Log::error("Gagal mengirim email stok rendah: " . $e->getMessage());
+            }
+        }
 
         //dd($data);
 

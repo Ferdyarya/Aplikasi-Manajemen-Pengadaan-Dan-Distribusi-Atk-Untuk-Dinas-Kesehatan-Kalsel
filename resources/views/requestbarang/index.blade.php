@@ -55,8 +55,8 @@
                                         <th class="px-6 py-2">Keterangan</th>
                                         <th class="px-6 py-2">Status</th>
                                          @if (Auth::user()->hakakses('petugas') || Auth::user()->hakakses('admin'))
-<th class="px-6 py-2">Action</th>
-@endif
+                                        <th class="px-6 py-2">Action</th>
+                                        @endif
                                     </tr>
                                 </thead>
                                 <tbody>
